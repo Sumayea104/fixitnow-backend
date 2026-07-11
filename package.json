@@ -5,7 +5,7 @@
   "main": "dist/server.js",
    "scripts": {
     "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev -r dotenv/config --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "prisma:generate": "prisma generate --schema=prisma/schema.prisma",
     "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",

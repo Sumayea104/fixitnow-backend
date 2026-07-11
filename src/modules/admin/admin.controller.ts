@@ -1,134 +1,200 @@
-import bcrypt from 'bcryptjs';
-import jwt, { SignOptions } from 'jsonwebtoken';
-import { UserRole, UserStatus } from '../../generated/prisma';
-import prisma from '../../config/prisma';
-import config from '../../config/env';
-import AppError from '../../errors/AppError';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import AdminService from './admin.service';
+import { UserStatus, BookingStatus } from '../../generated/prisma';
 
-const register = async (data: {
-  email: string;
-  password: string;
-  name: string;
-  phone?: string;
-  role: UserRole;
-}) => {
-  // Check if user already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email: data.email },
-  });
-
-  if (existingUser) {
-    throw new AppError(StatusCodes.CONFLICT, 'User already exists with this email');
-  }
-
-  // Hash password
-  const hashedPassword = await bcrypt.hash(data.password, 10);
-
-  // Create user
-  const user = await prisma.user.create({
-    data: {
-      email: data.email,
-      password: hashedPassword,
-      name: data.name,
-      phone: data.phone,
-      role: data.role,
-      status: UserStatus.ACTIVE,
-    },
-  });
-
-  // If role is TECHNICIAN, create technician profile
-  if (data.role === UserRole.TECHNICIAN) {
-    await prisma.technicianProfile.create({
-      data: {
-        userId: user.id,
-        skills: [],
-        isAvailable: true,
-      },
-    });
-  }
-
-  // Generate JWT token - FIXED
-  const payload = { id: user.id, email: user.email, role: user.role };
-const secret = config.jwt.secret;
-const options: SignOptions = { expiresIn: config.jwt.expiresIn } as any;
-
-const token = jwt.sign(payload, secret, options);
-  // Remove password from response
-  const { password, ...userWithoutPassword } = user;
-
+// ==================== Helper to parse query ====================
+const parseQuery = (query: any) => {
   return {
-    user: userWithoutPassword,
-    token,
+    page: Math.max(1, parseInt(query.page) || 1),
+    limit: Math.min(parseInt(query.limit) || 10, 100),
+    sortBy: (query.sortBy as string) || 'createdAt',
+    sortOrder: (query.sortOrder === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc',
+    search: query.search as string | undefined,
+    status: query.status as UserStatus | undefined,
+    role: query.role as string | undefined,
   };
 };
 
-const login = async (data: { email: string; password: string }) => {
-  // Find user
-  const user = await prisma.user.findUnique({
-    where: { email: data.email },
+// ==================== User Management ====================
+
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+  const parsedQuery = parseQuery(req.query);
+  const result = await AdminService.getAllUsers(parsedQuery);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Users retrieved successfully',
+    data: result.users,
+    meta: result.meta,
   });
+});
 
-  if (!user) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'Invalid email or password');
-  }
+const getUserDetails = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await AdminService.getUserDetails(id);
 
-  // Check if user is banned
-  if (user.status === UserStatus.BANNED) {
-    throw new AppError(StatusCodes.FORBIDDEN, 'Your account has been banned');
-  }
-
-  // Verify password
-  const isPasswordValid = await bcrypt.compare(data.password, user.password);
-
-  if (!isPasswordValid) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'Invalid email or password');
-  }
-
-  // Update last login
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { lastLoginAt: new Date() },
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User details retrieved successfully',
+    data: result,
   });
+});
 
-  // Generate JWT token - FIXED
-  const payload = { id: user.id, email: user.email, role: user.role };
-  const secret = config.jwt.secret;
-  const options: SignOptions = { expiresIn: config.jwt.expiresIn } as any;
+const updateUserStatus = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const result = await AdminService.updateUserStatus(id, status);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: `User status updated to ${status}`,
+    data: result,
+  });
+});
+
+// ==================== Booking Management ====================
+
+const getAllBookings = catchAsync(async (req: Request, res: Response) => {
+  const parsedQuery = {
+    page: Math.max(1, parseInt(req.query.page as string) || 1),
+    limit: Math.min(parseInt(req.query.limit as string) || 10, 100),
+    sortBy: (req.query.sortBy as string) || 'createdAt',
+    sortOrder: (req.query.sortOrder === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc',
+    status: req.query.status as BookingStatus | undefined,
+    search: req.query.search as string | undefined,
+    startDate: req.query.startDate as string | undefined,
+    endDate: req.query.endDate as string | undefined,
+  };
   
-  const token = jwt.sign(payload, secret, options);
+  const result = await AdminService.getAllBookings(parsedQuery);
 
-  // Remove password from response
-  const { password, ...userWithoutPassword } = user;
-
-  return {
-    user: userWithoutPassword,
-    token,
-  };
-};
-
-const getMe = async (userId: string) => {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    include: {
-      technicianProfile: true,
-    },
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Bookings retrieved successfully',
+    data: result.bookings,
+    meta: result.meta,
   });
+});
 
-  if (!user) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
-  }
+const updateBookingStatus = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const result = await AdminService.updateBookingStatus(id, status);
 
-  // Remove password from response
-  const { password, ...userWithoutPassword } = user;
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: `Booking status updated to ${status}`,
+    data: result,
+  });
+});
 
-  return userWithoutPassword;
+// ==================== Dashboard ====================
+
+const getDashboardStats = catchAsync(async (_req: Request, res: Response) => {
+  const result = await AdminService.getDashboardStats();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Dashboard statistics retrieved successfully',
+    data: result,
+  });
+});
+
+// ==================== Technician Management ====================
+
+const verifyTechnician = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { isVerified } = req.body;
+  const result = await AdminService.verifyTechnician(id, isVerified);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: `Technician ${isVerified ? 'verified' : 'unverified'} successfully`,
+    data: result,
+  });
+});
+
+// ==================== Category Management ====================
+
+const createCategory = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.createCategory(req.body);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: 'Category created successfully',
+    data: result,
+  });
+});
+
+const updateCategory = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await AdminService.updateCategory(id, req.body);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Category updated successfully',
+    data: result,
+  });
+});
+
+const deleteCategory = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await AdminService.deleteCategory(id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Category deleted successfully',
+    data: result,
+  });
+});
+
+const getAllCategories = catchAsync(async (_req: Request, res: Response) => {
+  const result = await AdminService.getAllCategories();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Categories retrieved successfully',
+    data: result,
+  });
+});
+
+// ==================== Export ====================
+
+export const AdminController = {
+  // User Management
+  getAllUsers,
+  getUserDetails,
+  updateUserStatus,
+  
+  // Booking Management
+  getAllBookings,
+  updateBookingStatus,
+  
+  // Dashboard
+  getDashboardStats,
+  
+  // Technician Management
+  verifyTechnician,
+  
+  // Category Management
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  getAllCategories,
 };
 
-export const AuthService = {
-  register,
-  login,
-  getMe,
-};
-
-export default AuthService;
+export default AdminController;
