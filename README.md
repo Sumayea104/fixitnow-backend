@@ -18,23 +18,82 @@ FixItNow is a production-ready, highly secure, and scalable on-demand service ma
 # 📂 Project Architecture
 The project follows a Modular Architecture for scalability and clean separation of concerns:
 ```
-src/
-├── app.ts                  # Express application setup
-├── server.ts               # Server listener configuration
-├── config/                 # Environment and global configs
-├── middleware/             # Global Error Handler, Auth & Role Guard, Validator
-├── utils/                  # Helper utilities (e.g., sendEmail)
-├── routes/                 # Global API router splitter
-└── modules/                # Feature-based modular directories
-    ├── auth/               # Register, Login, Token management
-    ├── users/              # User management
-    ├── technician/         # Profiles, schedules, skills
-    ├── category/           # Service categories
-    ├── service/            # Core services listing
-    ├── booking/            # Booking management logic
-    ├── payment/            # Stripe integration and history
-    ├── review/             # Feedback and rating system
-    └── admin/              # User control and system parameters
+fixitnow-backend/
+├── src/
+│   ├── config/
+│   │   ├── env.ts
+│   │   └── prisma.ts
+│   ├── constants/
+│   │   └── index.ts
+│   ├── errors/
+│   │   └── AppError.ts
+│   ├── interfaces/
+│   │   └── index.ts
+│   ├── middleware/
+│   │   ├── auth.ts
+│   │   ├── errorHandler.ts
+│   │   ├── role.ts
+│   │   └── validate.ts
+│   ├── modules/
+│   │   ├── admin/
+│   │   │   ├── admin.controller.ts
+│   │   │   ├── admin.route.ts
+│   │   │   ├── admin.service.ts
+│   │   │   └── admin.validation.ts
+│   │   ├── auth/
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.route.ts
+│   │   │   ├── auth.service.ts
+│   │   │   └── auth.validation.ts
+│   │   ├── booking/
+│   │   │   ├── booking.constant.ts
+│   │   │   ├── booking.controller.ts
+│   │   │   ├── booking.interface.ts
+│   │   │   ├── booking.route.ts
+│   │   │   ├── booking.service.ts
+│   │   │   └── booking.validation.ts
+│   │   ├── category/
+│   │   │   ├── category.controller.ts
+│   │   │   ├── category.route.ts
+│   │   │   ├── category.service.ts
+│   │   │   └── category.validation.ts
+│   │   ├── payment/
+│   │   │   ├── payment.controller.ts
+│   │   │   ├── payment.route.ts
+│   │   │   ├── payment.service.ts
+│   │   │   └── payment.validation.ts
+│   │   ├── review/
+│   │   │   ├── review.controller.ts
+│   │   │   ├── review.route.ts
+│   │   │   ├── review.service.ts
+│   │   │   └── review.validation.ts
+│   │   ├── service/
+│   │   │   ├── service.controller.ts
+│   │   │   ├── service.route.ts
+│   │   │   ├── service.service.ts
+│   │   │   └── service.validation.ts
+│   │   ├── technician/
+│   │   │   ├── technician.controller.ts
+│   │   │   ├── technician.route.ts
+│   │   │   ├── technician.service.ts
+│   │   │   └── technician.validation.ts
+│   │   └── user/
+│   │       ├── user.controller.ts
+│   │       ├── user.route.ts
+│   │       ├── user.service.ts
+│   │       └── user.validation.ts
+│   ├── utils/
+│   ├── app.ts
+│   └── server.ts
+├── prisma/
+│   ├── schema.prisma
+│   └── prisma.config.ts
+├── .env
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── README.md
+└── tsconfig.json
 ```
 ---
 # Security Features Implemented
