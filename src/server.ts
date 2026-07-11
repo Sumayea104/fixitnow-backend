@@ -6,7 +6,6 @@ const PORT = config.port;
 
 const startServer = async () => {
   try {
-    // Test database connection
     await prisma.$connect();
     console.log('✅ Database connected successfully');
 
@@ -15,6 +14,7 @@ const startServer = async () => {
       console.log(`📚 Environment: ${config.nodeEnv}`);
       console.log(`🔑 JWT Secret: ${config.jwt.secret ? '✅ Set' : '❌ Not set'}`);
       console.log(`💳 Stripe: ${config.stripe.secretKey ? '✅ Configured' : '❌ Not configured'}`);
+      console.log(`🏷️  SSL Store: ${config.sslCommerz.storeId ? '✅ Configured' : '❌ Not configured'}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
