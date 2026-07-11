@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import AdminService from './admin.service';
+import AdminService from './admin.service';  // ← Default import (no curly braces)
 import { UserStatus, BookingStatus } from '../../generated/prisma';
+
 
 // ==================== Helper to parse query ====================
 const parseQuery = (query: any) => {

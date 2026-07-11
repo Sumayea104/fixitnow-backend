@@ -1,9 +1,8 @@
 import { z } from 'zod';
 import { UserStatus, BookingStatus } from '../../generated/prisma';
 
-// Custom error messages
+// ==================== User Validation ====================
 
-// Update user status schema
 export const updateUserStatusSchema = z.object({
   body: z.object({
     status: z.enum([UserStatus.ACTIVE, UserStatus.BANNED], {
@@ -12,7 +11,14 @@ export const updateUserStatusSchema = z.object({
   }),
 });
 
-// Update booking status schema
+export const userIdSchema = z.object({
+  params: z.object({
+    id: z.string().uuid('Invalid user ID'),
+  }),
+});
+
+// ==================== Booking Validation ====================
+
 export const updateBookingStatusSchema = z.object({
   body: z.object({
     status: z.enum([
@@ -29,7 +35,14 @@ export const updateBookingStatusSchema = z.object({
   }),
 });
 
-// Verify technician schema
+export const bookingIdSchema = z.object({
+  params: z.object({
+    id: z.string().uuid('Invalid booking ID'),
+  }),
+});
+
+// ==================== Technician Validation ====================
+
 export const verifyTechnicianSchema = z.object({
   body: z.object({
     isVerified: z.boolean({
@@ -38,7 +51,14 @@ export const verifyTechnicianSchema = z.object({
   }),
 });
 
-// Create category schema
+export const technicianIdSchema = z.object({
+  params: z.object({
+    id: z.string().uuid('Invalid technician ID'),
+  }),
+});
+
+// ==================== Category Validation ====================
+
 export const createCategorySchema = z.object({
   body: z.object({
     name: z.string().min(2, 'Category name must be at least 2 characters'),
@@ -50,7 +70,6 @@ export const createCategorySchema = z.object({
   }),
 });
 
-// Update category schema
 export const updateCategorySchema = z.object({
   body: z.object({
     name: z.string().min(2, 'Category name must be at least 2 characters').optional(),
@@ -63,32 +82,14 @@ export const updateCategorySchema = z.object({
   }),
 });
 
-// ID param schemas
-export const userIdSchema = z.object({
-  params: z.object({
-    id: z.string().uuid('Invalid user ID'),
-  }),
-});
-
-export const bookingIdSchema = z.object({
-  params: z.object({
-    id: z.string().uuid('Invalid booking ID'),
-  }),
-});
-
-export const technicianIdSchema = z.object({
-  params: z.object({
-    id: z.string().uuid('Invalid technician ID'),
-  }),
-});
-
 export const categoryIdSchema = z.object({
   params: z.object({
     id: z.string().uuid('Invalid category ID'),
   }),
 });
 
-// Pagination and filter schema
+// ==================== Query Validation ====================
+
 export const adminQuerySchema = z.object({
   query: z.object({
     page: z.coerce.number().int().positive().default(1),
@@ -98,8 +99,12 @@ export const adminQuerySchema = z.object({
     search: z.string().optional(),
     status: z.enum([UserStatus.ACTIVE, UserStatus.BANNED]).optional(),
     role: z.enum(['ADMIN', 'CUSTOMER', 'TECHNICIAN']).optional(),
+    startDate: z.string().optional(),
+    endDate: z.string().optional(),
   }),
 });
+
+// ==================== Type Exports ====================
 
 export type UpdateUserStatusInput = z.infer<typeof updateUserStatusSchema>['body'];
 export type UpdateBookingStatusInput = z.infer<typeof updateBookingStatusSchema>['body'];

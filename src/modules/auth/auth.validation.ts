@@ -7,8 +7,8 @@ export const registerSchema = z.object({
     password: z.string().min(6, 'Password must be at least 6 characters'),
     name: z.string().min(2, 'Name must be at least 2 characters'),
     phone: z.string().optional(),
-    role: z.enum([UserRole.CUSTOMER, UserRole.TECHNICIAN], {
-      errorMap: () => ({ message: 'Role must be either CUSTOMER or TECHNICIAN' }),
+    role: z.enum([UserRole.CUSTOMER, UserRole.TECHNICIAN, UserRole.ADMIN], {
+      errorMap: () => ({ message: 'Role must be CUSTOMER, TECHNICIAN or ADMIN' }),
     }),
   }),
 });

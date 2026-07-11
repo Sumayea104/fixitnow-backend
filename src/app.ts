@@ -5,7 +5,8 @@ import morgan from 'morgan';
 import { StatusCodes } from 'http-status-codes';
 
 import authRoutes from './modules/auth/auth.route';
-import { errorHandler } from './middlewares';  // ← Changed from './middleware' to './middlewares'
+import adminRoutes from './modules/admin/admin.route';  // ← ADD THIS
+import { errorHandler } from './middlewares';
 import AppError from './errors/AppError';
 import config from './config/env';
 
@@ -23,9 +24,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);  // ← ADD THIS
 
 // Health check
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({
     success: true,
     message: '🚀 FixItNow API is running',
@@ -35,7 +37,7 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 // 404 handler
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, _res: Response, next: NextFunction) => {
   next(new AppError(StatusCodes.NOT_FOUND, `Route ${req.originalUrl} not found`));
 });
 

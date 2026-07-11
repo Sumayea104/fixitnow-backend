@@ -4,16 +4,16 @@ import AppError from '../../errors/AppError';
 import { StatusCodes } from 'http-status-codes';
 
 // ==================== User Management ====================
-const getAllUsers = async (query: {
-  page: number;
-  limit: number;
-  sortBy: string;
-  sortOrder: 'asc' | 'desc';
-  search?: string;
-  status?: UserStatus;
-  role?: string;
-}) => {
-  const { page, limit, sortBy, sortOrder, search, status, role } = query;
+
+export const getAllUsers = async (query: any) => {
+  const page = Math.max(1, parseInt(query.page) || 1);
+  const limit = Math.min(parseInt(query.limit) || 10, 100);
+  const sortBy = query.sortBy || 'createdAt';
+  const sortOrder = query.sortOrder === 'asc' ? 'asc' : 'desc';
+  const search = query.search as string | undefined;
+  const status = query.status as UserStatus | undefined;
+  const role = query.role as string | undefined;
+  
   const skip = (page - 1) * limit;
 
   const where: Prisma.UserWhereInput = {};
@@ -65,7 +65,6 @@ const getAllUsers = async (query: {
       _count: {
         select: {
           bookingsAsCustomer: true,
-          bookingsAsTechnician: true,
           reviews: true,
         },
       },
@@ -85,7 +84,7 @@ const getAllUsers = async (query: {
   };
 };
 
-const updateUserStatus = async (userId: string, status: UserStatus) => {
+export const updateUserStatus = async (userId: string, status: UserStatus) => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user) {
@@ -110,7 +109,7 @@ const updateUserStatus = async (userId: string, status: UserStatus) => {
   });
 };
 
-const getUserDetails = async (userId: string) => {
+export const getUserDetails = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
@@ -137,7 +136,6 @@ const getUserDetails = async (userId: string) => {
       _count: {
         select: {
           bookingsAsCustomer: true,
-          bookingsAsTechnician: true,
           payments: true,
           reviews: true,
         },
@@ -153,17 +151,17 @@ const getUserDetails = async (userId: string) => {
 };
 
 // ==================== Booking Management ====================
-const getAllBookings = async (query: {
-  page: number;
-  limit: number;
-  sortBy: string;
-  sortOrder: 'asc' | 'desc';
-  status?: BookingStatus;
-  search?: string;
-  startDate?: string;
-  endDate?: string;
-}) => {
-  const { page, limit, sortBy, sortOrder, status, search, startDate, endDate } = query;
+
+export const getAllBookings = async (query: any) => {
+  const page = Math.max(1, parseInt(query.page) || 1);
+  const limit = Math.min(parseInt(query.limit) || 10, 100);
+  const sortBy = query.sortBy || 'createdAt';
+  const sortOrder = query.sortOrder === 'asc' ? 'asc' : 'desc';
+  const status = query.status as BookingStatus | undefined;
+  const search = query.search as string | undefined;
+  const startDate = query.startDate as string | undefined;
+  const endDate = query.endDate as string | undefined;
+  
   const skip = (page - 1) * limit;
 
   const where: Prisma.BookingWhereInput = {};
@@ -215,7 +213,7 @@ const getAllBookings = async (query: {
   };
 };
 
-const updateBookingStatus = async (bookingId: string, status: BookingStatus) => {
+export const updateBookingStatus = async (bookingId: string, status: BookingStatus) => {
   const booking = await prisma.booking.findUnique({ where: { id: bookingId } });
 
   if (!booking) {
@@ -258,7 +256,8 @@ const updateBookingStatus = async (bookingId: string, status: BookingStatus) => 
 };
 
 // ==================== Dashboard ====================
-const getDashboardStats = async () => {
+
+export const getDashboardStats = async () => {
   const [
     totalUsers,
     activeUsers,
@@ -292,16 +291,31 @@ const getDashboardStats = async () => {
   ]);
 
   return {
-    users: { total: totalUsers, active: activeUsers, banned: bannedUsers },
-    technicians: { total: totalTechnicians, verified: verifiedTechnicians, unverified: totalTechnicians - verifiedTechnicians },
-    bookings: { total: totalBookings, pending: pendingBookings, completed: completedBookings },
-    revenue: { total: totalRevenue._sum.amount || 0 },
+    users: { 
+      total: totalUsers, 
+      active: activeUsers, 
+      banned: bannedUsers 
+    },
+    technicians: { 
+      total: totalTechnicians, 
+      verified: verifiedTechnicians, 
+      unverified: totalTechnicians - verifiedTechnicians 
+    },
+    bookings: { 
+      total: totalBookings, 
+      pending: pendingBookings, 
+      completed: completedBookings 
+    },
+    revenue: { 
+      total: totalRevenue._sum.amount || 0 
+    },
     recentBookings,
   };
 };
 
 // ==================== Technician Management ====================
-const verifyTechnician = async (technicianId: string, isVerified: boolean) => {
+
+export const verifyTechnician = async (technicianId: string, isVerified: boolean) => {
   const technician = await prisma.technicianProfile.findUnique({
     where: { id: technicianId },
   });
@@ -320,7 +334,8 @@ const verifyTechnician = async (technicianId: string, isVerified: boolean) => {
 };
 
 // ==================== Category Management ====================
-const createCategory = async (data: {
+
+export const createCategory = async (data: {
   name: string;
   slug: string;
   description?: string;
@@ -339,7 +354,7 @@ const createCategory = async (data: {
   return await prisma.category.create({ data });
 };
 
-const updateCategory = async (
+export const updateCategory = async (
   id: string,
   data: {
     name?: string;
@@ -376,7 +391,7 @@ const updateCategory = async (
   return await prisma.category.update({ where: { id }, data });
 };
 
-const deleteCategory = async (id: string) => {
+export const deleteCategory = async (id: string) => {
   const category = await prisma.category.findUnique({
     where: { id },
     include: { services: true, subCategories: true },
@@ -394,13 +409,15 @@ const deleteCategory = async (id: string) => {
   return { id, message: 'Category deleted successfully' };
 };
 
-const getAllCategories = async () => {
+export const getAllCategories = async () => {
   return await prisma.category.findMany({
     where: { parentCategoryId: null },
     include: { subCategories: true, services: { take: 5 } },
     orderBy: { name: 'asc' },
   });
 };
+
+// ==================== Export ====================
 
 export const AdminService = {
   getAllUsers,

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import { config } from '../config/env';
+import { UserRole } from '../generated/prisma';
 import AppError from '../errors/AppError';
 import catchAsync from '../utils/catchAsync';
 
@@ -11,13 +12,13 @@ declare global {
       user?: {
         id: string;
         email: string;
-        role: string;
+        role: UserRole;  // ← Use UserRole enum
       };
     }
   }
 }
 
-const authMiddleware = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+const authMiddleware = catchAsync(async (req: Request, _res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
@@ -27,7 +28,7 @@ const authMiddleware = catchAsync(async (req: Request, res: Response, next: Next
   const decoded = jwt.verify(token, config.jwt.secret) as {
     id: string;
     email: string;
-    role: string;
+    role: UserRole;  // ← Use UserRole enum
   };
   
   req.user = decoded;
