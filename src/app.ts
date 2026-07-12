@@ -5,7 +5,12 @@ import morgan from 'morgan';
 import { StatusCodes } from 'http-status-codes';
 
 import authRoutes from './modules/auth/auth.route';
-import adminRoutes from './modules/admin/admin.route';  // ← ADD THIS
+import adminRoutes from './modules/admin/admin.route'; 
+import technicianRoutes from './modules/technician/technician.route'; 
+import serviceRoutes from './modules/service/service.route';
+import categoryRoutes from './modules/category/category.route'; 
+
+
 import { errorHandler } from './middlewares';
 import AppError from './errors/AppError';
 import config from './config/env';
@@ -24,7 +29,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);  // ← ADD THIS
+app.use('/api/admin', adminRoutes);  
+app.use('/api/technician', technicianRoutes);
+app.use('/api/service', serviceRoutes);
+app.use('/api/categories', categoryRoutes);
+
 
 // Health check
 app.get('/health', (_req: Request, res: Response) => {
