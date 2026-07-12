@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: fixitnow-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: BCRYPT_SALT_ROUNDS
+        value: 12
+      - key: FRONTEND_URL
+        value: http://localhost:3000
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: SSL_STORE_ID
+        sync: false
+      - key: SSL_STORE_PASSWORD
+        sync: false
+      - key: SSL_BASE_URL
+        value: https://sandbox.sslcommerz.com
+      - key: SSL_SUCCESS_URL
+        sync: false
+      - key: SSL_FAIL_URL
+        sync: false
+      - key: SSL_CANCEL_URL
+        sync: false
