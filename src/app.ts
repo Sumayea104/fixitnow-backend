@@ -9,7 +9,7 @@ import adminRoutes from './modules/admin/admin.route';
 import technicianRoutes from './modules/technician/technician.route'; 
 import serviceRoutes from './modules/service/service.route';
 import categoryRoutes from './modules/category/category.route'; 
-
+import bookingRoutes from './modules/booking/booking.route';
 
 import { errorHandler } from './middlewares';
 import AppError from './errors/AppError';
@@ -33,7 +33,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/technician', technicianRoutes);
 app.use('/api/service', serviceRoutes);
 app.use('/api/categories', categoryRoutes);
-
+app.use('/api/bookings', bookingRoutes); 
 
 // Health check
 app.get('/health', (_req: Request, res: Response) => {
