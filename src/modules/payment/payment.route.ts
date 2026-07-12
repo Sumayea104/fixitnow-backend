@@ -3,6 +3,7 @@ import { validateRequest } from '../../middlewares/validate';
 import authMiddleware from '../../middlewares/auth';
 import roleMiddleware from '../../middlewares/role';
 import { PaymentController } from './payment.controller';
+import { SSLController } from './ssl.controller';
 import {
   createPaymentSchema,
   confirmPaymentSchema,
@@ -13,17 +14,32 @@ import { UserRole } from '../../generated/prisma';
 
 const router = express.Router();
 
-// Webhook (No Auth)
+// ==================== SSLCommerz Callbacks (No Auth) ====================
+router.get('/ssl/success', SSLController.sslSuccess);
+router.get('/ssl/fail', SSLController.sslFail);
+router.get('/ssl/cancel', SSLController.sslCancel);
+router.post('/ssl/ipn', SSLController.sslIPN);
+
+// ==================== Stripe Webhook (No Auth) ====================
 router.post('/webhook', express.raw({ type: 'application/json' }), PaymentController.stripeWebhook);
 
-// Protected Routes
+// ==================== Protected Routes ====================
 router.use(authMiddleware);
 
+// Stripe Payment
 router.post(
   '/create',
   roleMiddleware(UserRole.CUSTOMER),
   validateRequest(createPaymentSchema),
   PaymentController.createPayment
+);
+
+// SSLCommerz Payment
+router.post(
+  '/ssl/create',
+  roleMiddleware(UserRole.CUSTOMER),
+  validateRequest(createPaymentSchema),
+  SSLController.createSSLCommerzPayment
 );
 
 router.patch(
