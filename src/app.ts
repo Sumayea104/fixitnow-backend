@@ -7,7 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 import authRoutes from './modules/auth/auth.route';
 import adminRoutes from './modules/admin/admin.route'; 
 import technicianRoutes from './modules/technician/technician.route'; 
-import serviceRoutes from './modules/service/service.route';
+import serviceRoutes from './modules/service/service.route'; 
 import categoryRoutes from './modules/category/category.route'; 
 import bookingRoutes from './modules/booking/booking.route';
 
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);  
 app.use('/api/technician', technicianRoutes);
-app.use('/api/service', serviceRoutes);
+app.use('/api/services', serviceRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/bookings', bookingRoutes); 
 
