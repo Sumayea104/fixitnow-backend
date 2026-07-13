@@ -3,14 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import AuthService from './auth.service';
-import { UserRole } from '../../generated/prisma';
-interface AuthRequest extends Request {
-  user?: {
-    id: string;
-    email: string;
-    role: UserRole;
-  };
-}
+import { IAuthRequest } from '../../interfaces';
+
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.register(req.body);
@@ -34,7 +28,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getMe = catchAsync(async (req: AuthRequest, res: Response) => {
+const getMe = catchAsync(async (req: IAuthRequest, res: Response) => {
   const userId = req.user?.id;
   
   if (!userId) {
