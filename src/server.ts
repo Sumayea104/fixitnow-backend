@@ -4,10 +4,11 @@ import prisma from './config/prisma';
 
 const PORT = config.port;
 
-const startServer = async () => {
-  try {
-    await prisma.$connect();
-    console.log('✅ Database connected successfully');
+if (process.env.VERCEL !== '1') {
+  const startServer = async () => {
+    try {
+      await prisma.$connect();
+      console.log('✅ Database connected successfully');
 
     app.listen(PORT, () => {
       console.log(`🚀 FixItNow server is running on http://localhost:${PORT}`);
@@ -44,5 +45,6 @@ process.on('SIGTERM', async () => {
 });
 
 startServer();
+} 
 
 export default app;
