@@ -3,13 +3,12 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import AuthService from './auth.service';
-
-// Extend Request type
+import { UserRole } from '../../generated/prisma';
 interface AuthRequest extends Request {
   user?: {
     id: string;
     email: string;
-    role: string;
+    role: UserRole;
   };
 }
 

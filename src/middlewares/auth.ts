@@ -12,7 +12,7 @@ declare global {
       user?: {
         id: string;
         email: string;
-        role: UserRole;  // ← Use UserRole enum
+        role: UserRole;  
       };
     }
   }
@@ -28,7 +28,7 @@ const authMiddleware = catchAsync(async (req: Request, _res: Response, next: Nex
   const decoded = jwt.verify(token, config.jwt.secret) as {
     id: string;
     email: string;
-    role: UserRole;  // ← Use UserRole enum
+    role: UserRole;  
   };
   
   req.user = decoded;

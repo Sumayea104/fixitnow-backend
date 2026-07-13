@@ -5,7 +5,7 @@ import sendResponse from '../../utils/sendResponse';
 import CategoryService from './category.service';
 
 // ==================== Get All Categories (Public) ====================
-const getAllCategories = catchAsync(async (req: Request, res: Response) => {
+const getAllCategories = catchAsync(async (_req: Request, res: Response) => {
   const result = await CategoryService.getAllCategories();
 
   sendResponse(res, {
