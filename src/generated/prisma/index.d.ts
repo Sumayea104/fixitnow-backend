@@ -1627,16 +1627,16 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     bookingsAsCustomer: number
+    notifications: number
     payments: number
     reviews: number
-    notifications: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookingsAsCustomer?: boolean | UserCountOutputTypeCountBookingsAsCustomerArgs
+    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
-    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -1660,6 +1660,13 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentWhereInput
   }
@@ -1671,30 +1678,23 @@ export namespace Prisma {
     where?: ReviewWhereInput
   }
 
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
-  }
-
 
   /**
    * Count Type TechnicianProfileCountOutputType
    */
 
   export type TechnicianProfileCountOutputType = {
-    services: number
     availabilitySlots: number
     bookings: number
     reviewsReceived: number
+    services: number
   }
 
   export type TechnicianProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    services?: boolean | TechnicianProfileCountOutputTypeCountServicesArgs
     availabilitySlots?: boolean | TechnicianProfileCountOutputTypeCountAvailabilitySlotsArgs
     bookings?: boolean | TechnicianProfileCountOutputTypeCountBookingsArgs
     reviewsReceived?: boolean | TechnicianProfileCountOutputTypeCountReviewsReceivedArgs
+    services?: boolean | TechnicianProfileCountOutputTypeCountServicesArgs
   }
 
   // Custom InputTypes
@@ -1706,13 +1706,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the TechnicianProfileCountOutputType
      */
     select?: TechnicianProfileCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * TechnicianProfileCountOutputType without action
-   */
-  export type TechnicianProfileCountOutputTypeCountServicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ServiceWhereInput
   }
 
   /**
@@ -1734,6 +1727,13 @@ export namespace Prisma {
    */
   export type TechnicianProfileCountOutputTypeCountReviewsReceivedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * TechnicianProfileCountOutputType without action
+   */
+  export type TechnicianProfileCountOutputTypeCountServicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ServiceWhereInput
   }
 
 
@@ -2040,11 +2040,11 @@ export namespace Prisma {
     lastLoginAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    technicianProfile?: boolean | User$technicianProfileArgs<ExtArgs>
     bookingsAsCustomer?: boolean | User$bookingsAsCustomerArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
-    notifications?: boolean | User$notificationsArgs<ExtArgs>
+    technicianProfile?: boolean | User$technicianProfileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2081,11 +2081,11 @@ export namespace Prisma {
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    technicianProfile?: boolean | User$technicianProfileArgs<ExtArgs>
     bookingsAsCustomer?: boolean | User$bookingsAsCustomerArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
-    notifications?: boolean | User$notificationsArgs<ExtArgs>
+    technicianProfile?: boolean | User$technicianProfileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2093,11 +2093,11 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      technicianProfile: Prisma.$TechnicianProfilePayload<ExtArgs> | null
       bookingsAsCustomer: Prisma.$BookingPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
-      notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      technicianProfile: Prisma.$TechnicianProfilePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2477,11 +2477,11 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    technicianProfile<T extends User$technicianProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$technicianProfileArgs<ExtArgs>>): Prisma__TechnicianProfileClient<$Result.GetResult<Prisma.$TechnicianProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     bookingsAsCustomer<T extends User$bookingsAsCustomerArgs<ExtArgs> = {}>(args?: Subset<T, User$bookingsAsCustomerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany"> | Null>
+    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany"> | Null>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany"> | Null>
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
-    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany"> | Null>
+    technicianProfile<T extends User$technicianProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$technicianProfileArgs<ExtArgs>>): Prisma__TechnicianProfileClient<$Result.GetResult<Prisma.$TechnicianProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2838,21 +2838,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.technicianProfile
-   */
-  export type User$technicianProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TechnicianProfile
-     */
-    select?: TechnicianProfileSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TechnicianProfileInclude<ExtArgs> | null
-    where?: TechnicianProfileWhereInput
-  }
-
-  /**
    * User.bookingsAsCustomer
    */
   export type User$bookingsAsCustomerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2870,6 +2855,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BookingScalarFieldEnum | BookingScalarFieldEnum[]
+  }
+
+  /**
+   * User.notifications
+   */
+  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -2913,23 +2918,18 @@ export namespace Prisma {
   }
 
   /**
-   * User.notifications
+   * User.technicianProfile
    */
-  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$technicianProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Notification
+     * Select specific fields to fetch from the TechnicianProfile
      */
-    select?: NotificationSelect<ExtArgs> | null
+    select?: TechnicianProfileSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: NotificationInclude<ExtArgs> | null
-    where?: NotificationWhereInput
-    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
-    cursor?: NotificationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+    include?: TechnicianProfileInclude<ExtArgs> | null
+    where?: TechnicianProfileWhereInput
   }
 
   /**
@@ -3229,11 +3229,11 @@ export namespace Prisma {
     skills?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    services?: boolean | TechnicianProfile$servicesArgs<ExtArgs>
     availabilitySlots?: boolean | TechnicianProfile$availabilitySlotsArgs<ExtArgs>
     bookings?: boolean | TechnicianProfile$bookingsArgs<ExtArgs>
     reviewsReceived?: boolean | TechnicianProfile$reviewsReceivedArgs<ExtArgs>
+    services?: boolean | TechnicianProfile$servicesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | TechnicianProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["technicianProfile"]>
 
@@ -3273,11 +3273,11 @@ export namespace Prisma {
   }
 
   export type TechnicianProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    services?: boolean | TechnicianProfile$servicesArgs<ExtArgs>
     availabilitySlots?: boolean | TechnicianProfile$availabilitySlotsArgs<ExtArgs>
     bookings?: boolean | TechnicianProfile$bookingsArgs<ExtArgs>
     reviewsReceived?: boolean | TechnicianProfile$reviewsReceivedArgs<ExtArgs>
+    services?: boolean | TechnicianProfile$servicesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | TechnicianProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TechnicianProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3287,11 +3287,11 @@ export namespace Prisma {
   export type $TechnicianProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TechnicianProfile"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      services: Prisma.$ServicePayload<ExtArgs>[]
       availabilitySlots: Prisma.$AvailabilitySlotPayload<ExtArgs>[]
       bookings: Prisma.$BookingPayload<ExtArgs>[]
       reviewsReceived: Prisma.$ReviewPayload<ExtArgs>[]
+      services: Prisma.$ServicePayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3672,11 +3672,11 @@ export namespace Prisma {
    */
   export interface Prisma__TechnicianProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    services<T extends TechnicianProfile$servicesArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfile$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany"> | Null>
     availabilitySlots<T extends TechnicianProfile$availabilitySlotsArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfile$availabilitySlotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilitySlotPayload<ExtArgs>, T, "findMany"> | Null>
     bookings<T extends TechnicianProfile$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfile$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany"> | Null>
     reviewsReceived<T extends TechnicianProfile$reviewsReceivedArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfile$reviewsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
+    services<T extends TechnicianProfile$servicesArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfile$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany"> | Null>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4038,26 +4038,6 @@ export namespace Prisma {
   }
 
   /**
-   * TechnicianProfile.services
-   */
-  export type TechnicianProfile$servicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Service
-     */
-    select?: ServiceSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ServiceInclude<ExtArgs> | null
-    where?: ServiceWhereInput
-    orderBy?: ServiceOrderByWithRelationInput | ServiceOrderByWithRelationInput[]
-    cursor?: ServiceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
-  }
-
-  /**
    * TechnicianProfile.availabilitySlots
    */
   export type TechnicianProfile$availabilitySlotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4115,6 +4095,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * TechnicianProfile.services
+   */
+  export type TechnicianProfile$servicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Service
+     */
+    select?: ServiceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServiceInclude<ExtArgs> | null
+    where?: ServiceWhereInput
+    orderBy?: ServiceOrderByWithRelationInput | ServiceOrderByWithRelationInput[]
+    cursor?: ServiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
   }
 
   /**
@@ -6519,9 +6519,9 @@ export namespace Prisma {
     tags?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
     bookings?: boolean | Service$bookingsArgs<ExtArgs>
+    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     _count?: boolean | ServiceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
@@ -6540,8 +6540,8 @@ export namespace Prisma {
     tags?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
   export type ServiceSelectScalar = {
@@ -6562,22 +6562,22 @@ export namespace Prisma {
   }
 
   export type ServiceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
     bookings?: boolean | Service$bookingsArgs<ExtArgs>
+    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     _count?: boolean | ServiceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ServiceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
   }
 
   export type $ServicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Service"
     objects: {
-      technician: Prisma.$TechnicianProfilePayload<ExtArgs>
-      category: Prisma.$CategoryPayload<ExtArgs>
       bookings: Prisma.$BookingPayload<ExtArgs>[]
+      category: Prisma.$CategoryPayload<ExtArgs>
+      technician: Prisma.$TechnicianProfilePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6958,9 +6958,9 @@ export namespace Prisma {
    */
   export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    technician<T extends TechnicianProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfileDefaultArgs<ExtArgs>>): Prisma__TechnicianProfileClient<$Result.GetResult<Prisma.$TechnicianProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     bookings<T extends Service$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, Service$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany"> | Null>
+    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    technician<T extends TechnicianProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfileDefaultArgs<ExtArgs>>): Prisma__TechnicianProfileClient<$Result.GetResult<Prisma.$TechnicianProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7655,8 +7655,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customer?: boolean | UserDefaultArgs<ExtArgs>
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     service?: boolean | ServiceDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     payment?: boolean | Booking$paymentArgs<ExtArgs>
     review?: boolean | Booking$reviewArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
@@ -7680,8 +7680,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     customer?: boolean | UserDefaultArgs<ExtArgs>
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     service?: boolean | ServiceDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectScalar = {
@@ -7706,23 +7706,23 @@ export namespace Prisma {
 
   export type BookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | UserDefaultArgs<ExtArgs>
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     service?: boolean | ServiceDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     payment?: boolean | Booking$paymentArgs<ExtArgs>
     review?: boolean | Booking$reviewArgs<ExtArgs>
   }
   export type BookingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | UserDefaultArgs<ExtArgs>
-    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
     service?: boolean | ServiceDefaultArgs<ExtArgs>
+    technician?: boolean | TechnicianProfileDefaultArgs<ExtArgs>
   }
 
   export type $BookingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Booking"
     objects: {
       customer: Prisma.$UserPayload<ExtArgs>
-      technician: Prisma.$TechnicianProfilePayload<ExtArgs>
       service: Prisma.$ServicePayload<ExtArgs>
+      technician: Prisma.$TechnicianProfilePayload<ExtArgs>
       payment: Prisma.$PaymentPayload<ExtArgs> | null
       review: Prisma.$ReviewPayload<ExtArgs> | null
     }
@@ -8109,8 +8109,8 @@ export namespace Prisma {
   export interface Prisma__BookingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     customer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    technician<T extends TechnicianProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfileDefaultArgs<ExtArgs>>): Prisma__TechnicianProfileClient<$Result.GetResult<Prisma.$TechnicianProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     service<T extends ServiceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServiceDefaultArgs<ExtArgs>>): Prisma__ServiceClient<$Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    technician<T extends TechnicianProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianProfileDefaultArgs<ExtArgs>>): Prisma__TechnicianProfileClient<$Result.GetResult<Prisma.$TechnicianProfilePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     payment<T extends Booking$paymentArgs<ExtArgs> = {}>(args?: Subset<T, Booking$paymentArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     review<T extends Booking$reviewArgs<ExtArgs> = {}>(args?: Subset<T, Booking$reviewArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
@@ -12106,11 +12106,11 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    technicianProfile?: XOR<TechnicianProfileNullableRelationFilter, TechnicianProfileWhereInput> | null
     bookingsAsCustomer?: BookingListRelationFilter
+    notifications?: NotificationListRelationFilter
     payments?: PaymentListRelationFilter
     reviews?: ReviewListRelationFilter
-    notifications?: NotificationListRelationFilter
+    technicianProfile?: XOR<TechnicianProfileNullableRelationFilter, TechnicianProfileWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12127,11 +12127,11 @@ export namespace Prisma {
     lastLoginAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    technicianProfile?: TechnicianProfileOrderByWithRelationInput
     bookingsAsCustomer?: BookingOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
-    notifications?: NotificationOrderByRelationAggregateInput
+    technicianProfile?: TechnicianProfileOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -12151,11 +12151,11 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    technicianProfile?: XOR<TechnicianProfileNullableRelationFilter, TechnicianProfileWhereInput> | null
     bookingsAsCustomer?: BookingListRelationFilter
+    notifications?: NotificationListRelationFilter
     payments?: PaymentListRelationFilter
     reviews?: ReviewListRelationFilter
-    notifications?: NotificationListRelationFilter
+    technicianProfile?: XOR<TechnicianProfileNullableRelationFilter, TechnicianProfileWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -12214,11 +12214,11 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"TechnicianProfile">
     createdAt?: DateTimeFilter<"TechnicianProfile"> | Date | string
     updatedAt?: DateTimeFilter<"TechnicianProfile"> | Date | string
-    user?: XOR<UserRelationFilter, UserWhereInput>
-    services?: ServiceListRelationFilter
     availabilitySlots?: AvailabilitySlotListRelationFilter
     bookings?: BookingListRelationFilter
     reviewsReceived?: ReviewListRelationFilter
+    services?: ServiceListRelationFilter
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
   export type TechnicianProfileOrderByWithRelationInput = {
@@ -12236,11 +12236,11 @@ export namespace Prisma {
     skills?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
-    services?: ServiceOrderByRelationAggregateInput
     availabilitySlots?: AvailabilitySlotOrderByRelationAggregateInput
     bookings?: BookingOrderByRelationAggregateInput
     reviewsReceived?: ReviewOrderByRelationAggregateInput
+    services?: ServiceOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type TechnicianProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -12261,11 +12261,11 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"TechnicianProfile">
     createdAt?: DateTimeFilter<"TechnicianProfile"> | Date | string
     updatedAt?: DateTimeFilter<"TechnicianProfile"> | Date | string
-    user?: XOR<UserRelationFilter, UserWhereInput>
-    services?: ServiceListRelationFilter
     availabilitySlots?: AvailabilitySlotListRelationFilter
     bookings?: BookingListRelationFilter
     reviewsReceived?: ReviewListRelationFilter
+    services?: ServiceListRelationFilter
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
   export type TechnicianProfileOrderByWithAggregationInput = {
@@ -12507,9 +12507,9 @@ export namespace Prisma {
     tags?: StringNullableListFilter<"Service">
     createdAt?: DateTimeFilter<"Service"> | Date | string
     updatedAt?: DateTimeFilter<"Service"> | Date | string
-    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
-    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
     bookings?: BookingListRelationFilter
+    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
+    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
   }
 
   export type ServiceOrderByWithRelationInput = {
@@ -12527,9 +12527,9 @@ export namespace Prisma {
     tags?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    technician?: TechnicianProfileOrderByWithRelationInput
-    category?: CategoryOrderByWithRelationInput
     bookings?: BookingOrderByRelationAggregateInput
+    category?: CategoryOrderByWithRelationInput
+    technician?: TechnicianProfileOrderByWithRelationInput
   }
 
   export type ServiceWhereUniqueInput = Prisma.AtLeast<{
@@ -12550,9 +12550,9 @@ export namespace Prisma {
     tags?: StringNullableListFilter<"Service">
     createdAt?: DateTimeFilter<"Service"> | Date | string
     updatedAt?: DateTimeFilter<"Service"> | Date | string
-    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
-    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
     bookings?: BookingListRelationFilter
+    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
+    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
   }, "id">
 
   export type ServiceOrderByWithAggregationInput = {
@@ -12619,8 +12619,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     updatedAt?: DateTimeFilter<"Booking"> | Date | string
     customer?: XOR<UserRelationFilter, UserWhereInput>
-    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
     service?: XOR<ServiceRelationFilter, ServiceWhereInput>
+    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
     payment?: XOR<PaymentNullableRelationFilter, PaymentWhereInput> | null
     review?: XOR<ReviewNullableRelationFilter, ReviewWhereInput> | null
   }
@@ -12644,8 +12644,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     customer?: UserOrderByWithRelationInput
-    technician?: TechnicianProfileOrderByWithRelationInput
     service?: ServiceOrderByWithRelationInput
+    technician?: TechnicianProfileOrderByWithRelationInput
     payment?: PaymentOrderByWithRelationInput
     review?: ReviewOrderByWithRelationInput
   }
@@ -12672,8 +12672,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     updatedAt?: DateTimeFilter<"Booking"> | Date | string
     customer?: XOR<UserRelationFilter, UserWhereInput>
-    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
     service?: XOR<ServiceRelationFilter, ServiceWhereInput>
+    technician?: XOR<TechnicianProfileRelationFilter, TechnicianProfileWhereInput>
     payment?: XOR<PaymentNullableRelationFilter, PaymentWhereInput> | null
     review?: XOR<ReviewNullableRelationFilter, ReviewWhereInput> | null
   }, "id" | "bookingNumber">
@@ -13043,11 +13043,11 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingCreateNestedManyWithoutCustomerInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutCustomerInput
     reviews?: ReviewCreateNestedManyWithoutCustomerInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
+    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13064,11 +13064,11 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingUncheckedCreateNestedManyWithoutCustomerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13085,11 +13085,11 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUpdateManyWithoutCustomerNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUpdateManyWithoutCustomerNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13106,11 +13106,11 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUncheckedUpdateManyWithoutCustomerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -13175,11 +13175,11 @@ export namespace Prisma {
     skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTechnicianProfileInput
-    services?: ServiceCreateNestedManyWithoutTechnicianInput
     availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
     bookings?: BookingCreateNestedManyWithoutTechnicianInput
     reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
+    services?: ServiceCreateNestedManyWithoutTechnicianInput
+    user: UserCreateNestedOneWithoutTechnicianProfileInput
   }
 
   export type TechnicianProfileUncheckedCreateInput = {
@@ -13197,10 +13197,10 @@ export namespace Prisma {
     skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
     availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
     bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
     reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
+    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
   }
 
   export type TechnicianProfileUpdateInput = {
@@ -13217,11 +13217,11 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
-    services?: ServiceUpdateManyWithoutTechnicianNestedInput
     availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
     bookings?: BookingUpdateManyWithoutTechnicianNestedInput
     reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUpdateManyWithoutTechnicianNestedInput
+    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
   }
 
   export type TechnicianProfileUncheckedUpdateInput = {
@@ -13239,10 +13239,10 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
     availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
     reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type TechnicianProfileCreateManyInput = {
@@ -13510,9 +13510,9 @@ export namespace Prisma {
     tags?: ServiceCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    technician: TechnicianProfileCreateNestedOneWithoutServicesInput
-    category: CategoryCreateNestedOneWithoutServicesInput
     bookings?: BookingCreateNestedManyWithoutServiceInput
+    category: CategoryCreateNestedOneWithoutServicesInput
+    technician: TechnicianProfileCreateNestedOneWithoutServicesInput
   }
 
   export type ServiceUncheckedCreateInput = {
@@ -13546,9 +13546,9 @@ export namespace Prisma {
     tags?: ServiceUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technician?: TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutServicesNestedInput
     bookings?: BookingUpdateManyWithoutServiceNestedInput
+    category?: CategoryUpdateOneRequiredWithoutServicesNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput
   }
 
   export type ServiceUncheckedUpdateInput = {
@@ -13634,8 +13634,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customer: UserCreateNestedOneWithoutBookingsAsCustomerInput
-    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     service: ServiceCreateNestedOneWithoutBookingsInput
+    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     payment?: PaymentCreateNestedOneWithoutBookingInput
     review?: ReviewCreateNestedOneWithoutBookingInput
   }
@@ -13678,8 +13678,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: UserUpdateOneRequiredWithoutBookingsAsCustomerNestedInput
-    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     service?: ServiceUpdateOneRequiredWithoutBookingsNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     payment?: PaymentUpdateOneWithoutBookingNestedInput
     review?: ReviewUpdateOneWithoutBookingNestedInput
   }
@@ -14171,15 +14171,16 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type TechnicianProfileNullableRelationFilter = {
-    is?: TechnicianProfileWhereInput | null
-    isNot?: TechnicianProfileWhereInput | null
-  }
-
   export type BookingListRelationFilter = {
     every?: BookingWhereInput
     some?: BookingWhereInput
     none?: BookingWhereInput
+  }
+
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
   }
 
   export type PaymentListRelationFilter = {
@@ -14194,10 +14195,9 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
-  export type NotificationListRelationFilter = {
-    every?: NotificationWhereInput
-    some?: NotificationWhereInput
-    none?: NotificationWhereInput
+  export type TechnicianProfileNullableRelationFilter = {
+    is?: TechnicianProfileWhereInput | null
+    isNot?: TechnicianProfileWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -14209,15 +14209,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PaymentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ReviewOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14413,9 +14413,10 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
-  export type UserRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type AvailabilitySlotListRelationFilter = {
+    every?: AvailabilitySlotWhereInput
+    some?: AvailabilitySlotWhereInput
+    none?: AvailabilitySlotWhereInput
   }
 
   export type ServiceListRelationFilter = {
@@ -14424,17 +14425,16 @@ export namespace Prisma {
     none?: ServiceWhereInput
   }
 
-  export type AvailabilitySlotListRelationFilter = {
-    every?: AvailabilitySlotWhereInput
-    some?: AvailabilitySlotWhereInput
-    none?: AvailabilitySlotWhereInput
-  }
-
-  export type ServiceOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type AvailabilitySlotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ServiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15118,17 +15118,18 @@ export namespace Prisma {
     _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
-  export type TechnicianProfileCreateNestedOneWithoutUserInput = {
-    create?: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
-    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutUserInput
-    connect?: TechnicianProfileWhereUniqueInput
-  }
-
   export type BookingCreateNestedManyWithoutCustomerInput = {
     create?: XOR<BookingCreateWithoutCustomerInput, BookingUncheckedCreateWithoutCustomerInput> | BookingCreateWithoutCustomerInput[] | BookingUncheckedCreateWithoutCustomerInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutCustomerInput | BookingCreateOrConnectWithoutCustomerInput[]
     createMany?: BookingCreateManyCustomerInputEnvelope
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type NotificationCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type PaymentCreateNestedManyWithoutCustomerInput = {
@@ -15145,14 +15146,7 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
-  export type NotificationCreateNestedManyWithoutUserInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type TechnicianProfileUncheckedCreateNestedOneWithoutUserInput = {
+  export type TechnicianProfileCreateNestedOneWithoutUserInput = {
     create?: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: TechnicianProfileCreateOrConnectWithoutUserInput
     connect?: TechnicianProfileWhereUniqueInput
@@ -15163,6 +15157,13 @@ export namespace Prisma {
     connectOrCreate?: BookingCreateOrConnectWithoutCustomerInput | BookingCreateOrConnectWithoutCustomerInput[]
     createMany?: BookingCreateManyCustomerInputEnvelope
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type PaymentUncheckedCreateNestedManyWithoutCustomerInput = {
@@ -15179,11 +15180,10 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
-  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  export type TechnicianProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutUserInput
+    connect?: TechnicianProfileWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -15214,16 +15214,6 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type TechnicianProfileUpdateOneWithoutUserNestedInput = {
-    create?: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
-    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutUserInput
-    upsert?: TechnicianProfileUpsertWithoutUserInput
-    disconnect?: TechnicianProfileWhereInput | boolean
-    delete?: TechnicianProfileWhereInput | boolean
-    connect?: TechnicianProfileWhereUniqueInput
-    update?: XOR<XOR<TechnicianProfileUpdateToOneWithWhereWithoutUserInput, TechnicianProfileUpdateWithoutUserInput>, TechnicianProfileUncheckedUpdateWithoutUserInput>
-  }
-
   export type BookingUpdateManyWithoutCustomerNestedInput = {
     create?: XOR<BookingCreateWithoutCustomerInput, BookingUncheckedCreateWithoutCustomerInput> | BookingCreateWithoutCustomerInput[] | BookingUncheckedCreateWithoutCustomerInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutCustomerInput | BookingCreateOrConnectWithoutCustomerInput[]
@@ -15236,6 +15226,20 @@ export namespace Prisma {
     update?: BookingUpdateWithWhereUniqueWithoutCustomerInput | BookingUpdateWithWhereUniqueWithoutCustomerInput[]
     updateMany?: BookingUpdateManyWithWhereWithoutCustomerInput | BookingUpdateManyWithWhereWithoutCustomerInput[]
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type NotificationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type PaymentUpdateManyWithoutCustomerNestedInput = {
@@ -15266,21 +15270,7 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type NotificationUpdateManyWithoutUserNestedInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput = {
+  export type TechnicianProfileUpdateOneWithoutUserNestedInput = {
     create?: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: TechnicianProfileCreateOrConnectWithoutUserInput
     upsert?: TechnicianProfileUpsertWithoutUserInput
@@ -15302,6 +15292,20 @@ export namespace Prisma {
     update?: BookingUpdateWithWhereUniqueWithoutCustomerInput | BookingUpdateWithWhereUniqueWithoutCustomerInput[]
     updateMany?: BookingUpdateManyWithWhereWithoutCustomerInput | BookingUpdateManyWithWhereWithoutCustomerInput[]
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type PaymentUncheckedUpdateManyWithoutCustomerNestedInput = {
@@ -15332,35 +15336,18 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  export type TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutUserInput
+    upsert?: TechnicianProfileUpsertWithoutUserInput
+    disconnect?: TechnicianProfileWhereInput | boolean
+    delete?: TechnicianProfileWhereInput | boolean
+    connect?: TechnicianProfileWhereUniqueInput
+    update?: XOR<XOR<TechnicianProfileUpdateToOneWithWhereWithoutUserInput, TechnicianProfileUpdateWithoutUserInput>, TechnicianProfileUncheckedUpdateWithoutUserInput>
   }
 
   export type TechnicianProfileCreateskillsInput = {
     set: string[]
-  }
-
-  export type UserCreateNestedOneWithoutTechnicianProfileInput = {
-    create?: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTechnicianProfileInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type ServiceCreateNestedManyWithoutTechnicianInput = {
-    create?: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput> | ServiceCreateWithoutTechnicianInput[] | ServiceUncheckedCreateWithoutTechnicianInput[]
-    connectOrCreate?: ServiceCreateOrConnectWithoutTechnicianInput | ServiceCreateOrConnectWithoutTechnicianInput[]
-    createMany?: ServiceCreateManyTechnicianInputEnvelope
-    connect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
   }
 
   export type AvailabilitySlotCreateNestedManyWithoutTechnicianInput = {
@@ -15384,11 +15371,17 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
-  export type ServiceUncheckedCreateNestedManyWithoutTechnicianInput = {
+  export type ServiceCreateNestedManyWithoutTechnicianInput = {
     create?: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput> | ServiceCreateWithoutTechnicianInput[] | ServiceUncheckedCreateWithoutTechnicianInput[]
     connectOrCreate?: ServiceCreateOrConnectWithoutTechnicianInput | ServiceCreateOrConnectWithoutTechnicianInput[]
     createMany?: ServiceCreateManyTechnicianInputEnvelope
     connect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutTechnicianProfileInput = {
+    create?: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTechnicianProfileInput
+    connect?: UserWhereUniqueInput
   }
 
   export type AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput = {
@@ -15410,6 +15403,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutTechnicianInput | ReviewCreateOrConnectWithoutTechnicianInput[]
     createMany?: ReviewCreateManyTechnicianInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type ServiceUncheckedCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput> | ServiceCreateWithoutTechnicianInput[] | ServiceUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: ServiceCreateOrConnectWithoutTechnicianInput | ServiceCreateOrConnectWithoutTechnicianInput[]
+    createMany?: ServiceCreateManyTechnicianInputEnvelope
+    connect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -15447,28 +15447,6 @@ export namespace Prisma {
   export type TechnicianProfileUpdateskillsInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type UserUpdateOneRequiredWithoutTechnicianProfileNestedInput = {
-    create?: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTechnicianProfileInput
-    upsert?: UserUpsertWithoutTechnicianProfileInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTechnicianProfileInput, UserUpdateWithoutTechnicianProfileInput>, UserUncheckedUpdateWithoutTechnicianProfileInput>
-  }
-
-  export type ServiceUpdateManyWithoutTechnicianNestedInput = {
-    create?: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput> | ServiceCreateWithoutTechnicianInput[] | ServiceUncheckedCreateWithoutTechnicianInput[]
-    connectOrCreate?: ServiceCreateOrConnectWithoutTechnicianInput | ServiceCreateOrConnectWithoutTechnicianInput[]
-    upsert?: ServiceUpsertWithWhereUniqueWithoutTechnicianInput | ServiceUpsertWithWhereUniqueWithoutTechnicianInput[]
-    createMany?: ServiceCreateManyTechnicianInputEnvelope
-    set?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
-    disconnect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
-    delete?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
-    connect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
-    update?: ServiceUpdateWithWhereUniqueWithoutTechnicianInput | ServiceUpdateWithWhereUniqueWithoutTechnicianInput[]
-    updateMany?: ServiceUpdateManyWithWhereWithoutTechnicianInput | ServiceUpdateManyWithWhereWithoutTechnicianInput[]
-    deleteMany?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
   }
 
   export type AvailabilitySlotUpdateManyWithoutTechnicianNestedInput = {
@@ -15513,7 +15491,7 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type ServiceUncheckedUpdateManyWithoutTechnicianNestedInput = {
+  export type ServiceUpdateManyWithoutTechnicianNestedInput = {
     create?: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput> | ServiceCreateWithoutTechnicianInput[] | ServiceUncheckedCreateWithoutTechnicianInput[]
     connectOrCreate?: ServiceCreateOrConnectWithoutTechnicianInput | ServiceCreateOrConnectWithoutTechnicianInput[]
     upsert?: ServiceUpsertWithWhereUniqueWithoutTechnicianInput | ServiceUpsertWithWhereUniqueWithoutTechnicianInput[]
@@ -15525,6 +15503,14 @@ export namespace Prisma {
     update?: ServiceUpdateWithWhereUniqueWithoutTechnicianInput | ServiceUpdateWithWhereUniqueWithoutTechnicianInput[]
     updateMany?: ServiceUpdateManyWithWhereWithoutTechnicianInput | ServiceUpdateManyWithWhereWithoutTechnicianInput[]
     deleteMany?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutTechnicianProfileNestedInput = {
+    create?: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTechnicianProfileInput
+    upsert?: UserUpsertWithoutTechnicianProfileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTechnicianProfileInput, UserUpdateWithoutTechnicianProfileInput>, UserUncheckedUpdateWithoutTechnicianProfileInput>
   }
 
   export type AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput = {
@@ -15567,6 +15553,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutTechnicianInput | ReviewUpdateWithWhereUniqueWithoutTechnicianInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutTechnicianInput | ReviewUpdateManyWithWhereWithoutTechnicianInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type ServiceUncheckedUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput> | ServiceCreateWithoutTechnicianInput[] | ServiceUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: ServiceCreateOrConnectWithoutTechnicianInput | ServiceCreateOrConnectWithoutTechnicianInput[]
+    upsert?: ServiceUpsertWithWhereUniqueWithoutTechnicianInput | ServiceUpsertWithWhereUniqueWithoutTechnicianInput[]
+    createMany?: ServiceCreateManyTechnicianInputEnvelope
+    set?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
+    disconnect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
+    delete?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
+    connect?: ServiceWhereUniqueInput | ServiceWhereUniqueInput[]
+    update?: ServiceUpdateWithWhereUniqueWithoutTechnicianInput | ServiceUpdateWithWhereUniqueWithoutTechnicianInput[]
+    updateMany?: ServiceUpdateManyWithWhereWithoutTechnicianInput | ServiceUpdateManyWithWhereWithoutTechnicianInput[]
+    deleteMany?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
   }
 
   export type TechnicianProfileCreateNestedOneWithoutAvailabilitySlotsInput = {
@@ -15691,10 +15691,11 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type TechnicianProfileCreateNestedOneWithoutServicesInput = {
-    create?: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
-    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutServicesInput
-    connect?: TechnicianProfileWhereUniqueInput
+  export type BookingCreateNestedManyWithoutServiceInput = {
+    create?: XOR<BookingCreateWithoutServiceInput, BookingUncheckedCreateWithoutServiceInput> | BookingCreateWithoutServiceInput[] | BookingUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutServiceInput | BookingCreateOrConnectWithoutServiceInput[]
+    createMany?: BookingCreateManyServiceInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
   }
 
   export type CategoryCreateNestedOneWithoutServicesInput = {
@@ -15703,11 +15704,10 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput
   }
 
-  export type BookingCreateNestedManyWithoutServiceInput = {
-    create?: XOR<BookingCreateWithoutServiceInput, BookingUncheckedCreateWithoutServiceInput> | BookingCreateWithoutServiceInput[] | BookingUncheckedCreateWithoutServiceInput[]
-    connectOrCreate?: BookingCreateOrConnectWithoutServiceInput | BookingCreateOrConnectWithoutServiceInput[]
-    createMany?: BookingCreateManyServiceInputEnvelope
-    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  export type TechnicianProfileCreateNestedOneWithoutServicesInput = {
+    create?: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
+    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutServicesInput
+    connect?: TechnicianProfileWhereUniqueInput
   }
 
   export type BookingUncheckedCreateNestedManyWithoutServiceInput = {
@@ -15727,22 +15727,6 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput = {
-    create?: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
-    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutServicesInput
-    upsert?: TechnicianProfileUpsertWithoutServicesInput
-    connect?: TechnicianProfileWhereUniqueInput
-    update?: XOR<XOR<TechnicianProfileUpdateToOneWithWhereWithoutServicesInput, TechnicianProfileUpdateWithoutServicesInput>, TechnicianProfileUncheckedUpdateWithoutServicesInput>
-  }
-
-  export type CategoryUpdateOneRequiredWithoutServicesNestedInput = {
-    create?: XOR<CategoryCreateWithoutServicesInput, CategoryUncheckedCreateWithoutServicesInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutServicesInput
-    upsert?: CategoryUpsertWithoutServicesInput
-    connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutServicesInput, CategoryUpdateWithoutServicesInput>, CategoryUncheckedUpdateWithoutServicesInput>
-  }
-
   export type BookingUpdateManyWithoutServiceNestedInput = {
     create?: XOR<BookingCreateWithoutServiceInput, BookingUncheckedCreateWithoutServiceInput> | BookingCreateWithoutServiceInput[] | BookingUncheckedCreateWithoutServiceInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutServiceInput | BookingCreateOrConnectWithoutServiceInput[]
@@ -15755,6 +15739,22 @@ export namespace Prisma {
     update?: BookingUpdateWithWhereUniqueWithoutServiceInput | BookingUpdateWithWhereUniqueWithoutServiceInput[]
     updateMany?: BookingUpdateManyWithWhereWithoutServiceInput | BookingUpdateManyWithWhereWithoutServiceInput[]
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type CategoryUpdateOneRequiredWithoutServicesNestedInput = {
+    create?: XOR<CategoryCreateWithoutServicesInput, CategoryUncheckedCreateWithoutServicesInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutServicesInput
+    upsert?: CategoryUpsertWithoutServicesInput
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutServicesInput, CategoryUpdateWithoutServicesInput>, CategoryUncheckedUpdateWithoutServicesInput>
+  }
+
+  export type TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput = {
+    create?: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
+    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutServicesInput
+    upsert?: TechnicianProfileUpsertWithoutServicesInput
+    connect?: TechnicianProfileWhereUniqueInput
+    update?: XOR<XOR<TechnicianProfileUpdateToOneWithWhereWithoutServicesInput, TechnicianProfileUpdateWithoutServicesInput>, TechnicianProfileUncheckedUpdateWithoutServicesInput>
   }
 
   export type BookingUncheckedUpdateManyWithoutServiceNestedInput = {
@@ -15777,16 +15777,16 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type TechnicianProfileCreateNestedOneWithoutBookingsInput = {
-    create?: XOR<TechnicianProfileCreateWithoutBookingsInput, TechnicianProfileUncheckedCreateWithoutBookingsInput>
-    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutBookingsInput
-    connect?: TechnicianProfileWhereUniqueInput
-  }
-
   export type ServiceCreateNestedOneWithoutBookingsInput = {
     create?: XOR<ServiceCreateWithoutBookingsInput, ServiceUncheckedCreateWithoutBookingsInput>
     connectOrCreate?: ServiceCreateOrConnectWithoutBookingsInput
     connect?: ServiceWhereUniqueInput
+  }
+
+  export type TechnicianProfileCreateNestedOneWithoutBookingsInput = {
+    create?: XOR<TechnicianProfileCreateWithoutBookingsInput, TechnicianProfileUncheckedCreateWithoutBookingsInput>
+    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutBookingsInput
+    connect?: TechnicianProfileWhereUniqueInput
   }
 
   export type PaymentCreateNestedOneWithoutBookingInput = {
@@ -15825,20 +15825,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBookingsAsCustomerInput, UserUpdateWithoutBookingsAsCustomerInput>, UserUncheckedUpdateWithoutBookingsAsCustomerInput>
   }
 
-  export type TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput = {
-    create?: XOR<TechnicianProfileCreateWithoutBookingsInput, TechnicianProfileUncheckedCreateWithoutBookingsInput>
-    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutBookingsInput
-    upsert?: TechnicianProfileUpsertWithoutBookingsInput
-    connect?: TechnicianProfileWhereUniqueInput
-    update?: XOR<XOR<TechnicianProfileUpdateToOneWithWhereWithoutBookingsInput, TechnicianProfileUpdateWithoutBookingsInput>, TechnicianProfileUncheckedUpdateWithoutBookingsInput>
-  }
-
   export type ServiceUpdateOneRequiredWithoutBookingsNestedInput = {
     create?: XOR<ServiceCreateWithoutBookingsInput, ServiceUncheckedCreateWithoutBookingsInput>
     connectOrCreate?: ServiceCreateOrConnectWithoutBookingsInput
     upsert?: ServiceUpsertWithoutBookingsInput
     connect?: ServiceWhereUniqueInput
     update?: XOR<XOR<ServiceUpdateToOneWithWhereWithoutBookingsInput, ServiceUpdateWithoutBookingsInput>, ServiceUncheckedUpdateWithoutBookingsInput>
+  }
+
+  export type TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput = {
+    create?: XOR<TechnicianProfileCreateWithoutBookingsInput, TechnicianProfileUncheckedCreateWithoutBookingsInput>
+    connectOrCreate?: TechnicianProfileCreateOrConnectWithoutBookingsInput
+    upsert?: TechnicianProfileUpsertWithoutBookingsInput
+    connect?: TechnicianProfileWhereUniqueInput
+    update?: XOR<XOR<TechnicianProfileUpdateToOneWithWhereWithoutBookingsInput, TechnicianProfileUpdateWithoutBookingsInput>, TechnicianProfileUncheckedUpdateWithoutBookingsInput>
   }
 
   export type PaymentUpdateOneWithoutBookingNestedInput = {
@@ -16343,51 +16343,6 @@ export namespace Prisma {
     _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
-  export type TechnicianProfileCreateWithoutUserInput = {
-    id?: string
-    bio?: string | null
-    experience?: number | null
-    hourlyRate?: number | null
-    averageRating?: number
-    totalReviews?: number
-    location?: string | null
-    isAvailable?: boolean
-    isVerified?: boolean
-    completedJobs?: number
-    skills?: TechnicianProfileCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    services?: ServiceCreateNestedManyWithoutTechnicianInput
-    availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
-    bookings?: BookingCreateNestedManyWithoutTechnicianInput
-    reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
-  }
-
-  export type TechnicianProfileUncheckedCreateWithoutUserInput = {
-    id?: string
-    bio?: string | null
-    experience?: number | null
-    hourlyRate?: number | null
-    averageRating?: number
-    totalReviews?: number
-    location?: string | null
-    isAvailable?: boolean
-    isVerified?: boolean
-    completedJobs?: number
-    skills?: TechnicianProfileCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
-    availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
-    bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
-    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
-  }
-
-  export type TechnicianProfileCreateOrConnectWithoutUserInput = {
-    where: TechnicianProfileWhereUniqueInput
-    create: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
-  }
-
   export type BookingCreateWithoutCustomerInput = {
     id?: string
     bookingNumber: string
@@ -16403,8 +16358,8 @@ export namespace Prisma {
     technicianNotes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     service: ServiceCreateNestedOneWithoutBookingsInput
+    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     payment?: PaymentCreateNestedOneWithoutBookingInput
     review?: ReviewCreateNestedOneWithoutBookingInput
   }
@@ -16437,6 +16392,38 @@ export namespace Prisma {
 
   export type BookingCreateManyCustomerInputEnvelope = {
     data: BookingCreateManyCustomerInput | BookingCreateManyCustomerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.NotificationType
+    title: string
+    message: string
+    data?: NullableJsonNullValueInput | InputJsonValue
+    isRead?: boolean
+    readAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificationUncheckedCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.NotificationType
+    title: string
+    message: string
+    data?: NullableJsonNullValueInput | InputJsonValue
+    isRead?: boolean
+    readAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificationCreateOrConnectWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationCreateManyUserInputEnvelope = {
+    data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16530,87 +16517,49 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type NotificationCreateWithoutUserInput = {
+  export type TechnicianProfileCreateWithoutUserInput = {
     id?: string
-    type: $Enums.NotificationType
-    title: string
-    message: string
-    data?: NullableJsonNullValueInput | InputJsonValue
-    isRead?: boolean
-    readAt?: Date | string | null
+    bio?: string | null
+    experience?: number | null
+    hourlyRate?: number | null
+    averageRating?: number
+    totalReviews?: number
+    location?: string | null
+    isAvailable?: boolean
+    isVerified?: boolean
+    completedJobs?: number
+    skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
+    updatedAt?: Date | string
+    availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
+    bookings?: BookingCreateNestedManyWithoutTechnicianInput
+    reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
+    services?: ServiceCreateNestedManyWithoutTechnicianInput
   }
 
-  export type NotificationUncheckedCreateWithoutUserInput = {
+  export type TechnicianProfileUncheckedCreateWithoutUserInput = {
     id?: string
-    type: $Enums.NotificationType
-    title: string
-    message: string
-    data?: NullableJsonNullValueInput | InputJsonValue
-    isRead?: boolean
-    readAt?: Date | string | null
+    bio?: string | null
+    experience?: number | null
+    hourlyRate?: number | null
+    averageRating?: number
+    totalReviews?: number
+    location?: string | null
+    isAvailable?: boolean
+    isVerified?: boolean
+    completedJobs?: number
+    skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
+    updatedAt?: Date | string
+    availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
+    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
+    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
   }
 
-  export type NotificationCreateOrConnectWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
-  }
-
-  export type NotificationCreateManyUserInputEnvelope = {
-    data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TechnicianProfileUpsertWithoutUserInput = {
-    update: XOR<TechnicianProfileUpdateWithoutUserInput, TechnicianProfileUncheckedUpdateWithoutUserInput>
+  export type TechnicianProfileCreateOrConnectWithoutUserInput = {
+    where: TechnicianProfileWhereUniqueInput
     create: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
-    where?: TechnicianProfileWhereInput
-  }
-
-  export type TechnicianProfileUpdateToOneWithWhereWithoutUserInput = {
-    where?: TechnicianProfileWhereInput
-    data: XOR<TechnicianProfileUpdateWithoutUserInput, TechnicianProfileUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TechnicianProfileUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    experience?: NullableIntFieldUpdateOperationsInput | number | null
-    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
-    averageRating?: FloatFieldUpdateOperationsInput | number
-    totalReviews?: IntFieldUpdateOperationsInput | number
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    completedJobs?: IntFieldUpdateOperationsInput | number
-    skills?: TechnicianProfileUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    services?: ServiceUpdateManyWithoutTechnicianNestedInput
-    availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
-    bookings?: BookingUpdateManyWithoutTechnicianNestedInput
-    reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
-  }
-
-  export type TechnicianProfileUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    experience?: NullableIntFieldUpdateOperationsInput | number | null
-    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
-    averageRating?: FloatFieldUpdateOperationsInput | number
-    totalReviews?: IntFieldUpdateOperationsInput | number
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    completedJobs?: IntFieldUpdateOperationsInput | number
-    skills?: TechnicianProfileUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
-    availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
-    bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
-    reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type BookingUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -16650,6 +16599,37 @@ export namespace Prisma {
     technicianNotes?: StringNullableFilter<"Booking"> | string | null
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     updatedAt?: DateTimeFilter<"Booking"> | Date | string
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutUserInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    userId?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
+    title?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    data?: JsonNullableFilter<"Notification">
+    isRead?: BoolFilter<"Notification"> | boolean
+    readAt?: DateTimeNullableFilter<"Notification"> | Date | string | null
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -16727,124 +16707,55 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Review"> | Date | string
   }
 
-  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
-    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  export type TechnicianProfileUpsertWithoutUserInput = {
+    update: XOR<TechnicianProfileUpdateWithoutUserInput, TechnicianProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<TechnicianProfileCreateWithoutUserInput, TechnicianProfileUncheckedCreateWithoutUserInput>
+    where?: TechnicianProfileWhereInput
   }
 
-  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+  export type TechnicianProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: TechnicianProfileWhereInput
+    data: XOR<TechnicianProfileUpdateWithoutUserInput, TechnicianProfileUncheckedUpdateWithoutUserInput>
   }
 
-  export type NotificationUpdateManyWithWhereWithoutUserInput = {
-    where: NotificationScalarWhereInput
-    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
+  export type TechnicianProfileUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    totalReviews?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    completedJobs?: IntFieldUpdateOperationsInput | number
+    skills?: TechnicianProfileUpdateskillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
+    bookings?: BookingUpdateManyWithoutTechnicianNestedInput
+    reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUpdateManyWithoutTechnicianNestedInput
   }
 
-  export type NotificationScalarWhereInput = {
-    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    OR?: NotificationScalarWhereInput[]
-    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    id?: StringFilter<"Notification"> | string
-    userId?: StringFilter<"Notification"> | string
-    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
-    title?: StringFilter<"Notification"> | string
-    message?: StringFilter<"Notification"> | string
-    data?: JsonNullableFilter<"Notification">
-    isRead?: BoolFilter<"Notification"> | boolean
-    readAt?: DateTimeNullableFilter<"Notification"> | Date | string | null
-    createdAt?: DateTimeFilter<"Notification"> | Date | string
-  }
-
-  export type UserCreateWithoutTechnicianProfileInput = {
-    id?: string
-    email: string
-    password: string
-    name: string
-    phone?: string | null
-    address?: string | null
-    profileImage?: string | null
-    role?: $Enums.UserRole
-    status?: $Enums.UserStatus
-    isEmailVerified?: boolean
-    lastLoginAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    bookingsAsCustomer?: BookingCreateNestedManyWithoutCustomerInput
-    payments?: PaymentCreateNestedManyWithoutCustomerInput
-    reviews?: ReviewCreateNestedManyWithoutCustomerInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutTechnicianProfileInput = {
-    id?: string
-    email: string
-    password: string
-    name: string
-    phone?: string | null
-    address?: string | null
-    profileImage?: string | null
-    role?: $Enums.UserRole
-    status?: $Enums.UserStatus
-    isEmailVerified?: boolean
-    lastLoginAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    bookingsAsCustomer?: BookingUncheckedCreateNestedManyWithoutCustomerInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutTechnicianProfileInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
-  }
-
-  export type ServiceCreateWithoutTechnicianInput = {
-    id?: string
-    title: string
-    description: string
-    price: number
-    discountedPrice?: number | null
-    durationMinutes?: number | null
-    isActive?: boolean
-    isFeatured?: boolean
-    images?: ServiceCreateimagesInput | string[]
-    tags?: ServiceCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutServicesInput
-    bookings?: BookingCreateNestedManyWithoutServiceInput
-  }
-
-  export type ServiceUncheckedCreateWithoutTechnicianInput = {
-    id?: string
-    categoryId: string
-    title: string
-    description: string
-    price: number
-    discountedPrice?: number | null
-    durationMinutes?: number | null
-    isActive?: boolean
-    isFeatured?: boolean
-    images?: ServiceCreateimagesInput | string[]
-    tags?: ServiceCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    bookings?: BookingUncheckedCreateNestedManyWithoutServiceInput
-  }
-
-  export type ServiceCreateOrConnectWithoutTechnicianInput = {
-    where: ServiceWhereUniqueInput
-    create: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput>
-  }
-
-  export type ServiceCreateManyTechnicianInputEnvelope = {
-    data: ServiceCreateManyTechnicianInput | ServiceCreateManyTechnicianInput[]
-    skipDuplicates?: boolean
+  export type TechnicianProfileUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    totalReviews?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    completedJobs?: IntFieldUpdateOperationsInput | number
+    skills?: TechnicianProfileUpdateskillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
+    reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type AvailabilitySlotCreateWithoutTechnicianInput = {
@@ -16979,91 +16890,93 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutTechnicianProfileInput = {
-    update: XOR<UserUpdateWithoutTechnicianProfileInput, UserUncheckedUpdateWithoutTechnicianProfileInput>
-    create: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
-    where?: UserWhereInput
+  export type ServiceCreateWithoutTechnicianInput = {
+    id?: string
+    title: string
+    description: string
+    price: number
+    discountedPrice?: number | null
+    durationMinutes?: number | null
+    isActive?: boolean
+    isFeatured?: boolean
+    images?: ServiceCreateimagesInput | string[]
+    tags?: ServiceCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingCreateNestedManyWithoutServiceInput
+    category: CategoryCreateNestedOneWithoutServicesInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTechnicianProfileInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTechnicianProfileInput, UserUncheckedUpdateWithoutTechnicianProfileInput>
+  export type ServiceUncheckedCreateWithoutTechnicianInput = {
+    id?: string
+    categoryId: string
+    title: string
+    description: string
+    price: number
+    discountedPrice?: number | null
+    durationMinutes?: number | null
+    isActive?: boolean
+    isFeatured?: boolean
+    images?: ServiceCreateimagesInput | string[]
+    tags?: ServiceCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutServiceInput
   }
 
-  export type UserUpdateWithoutTechnicianProfileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingsAsCustomer?: BookingUpdateManyWithoutCustomerNestedInput
-    payments?: PaymentUpdateManyWithoutCustomerNestedInput
-    reviews?: ReviewUpdateManyWithoutCustomerNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutTechnicianProfileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingsAsCustomer?: BookingUncheckedUpdateManyWithoutCustomerNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type ServiceUpsertWithWhereUniqueWithoutTechnicianInput = {
+  export type ServiceCreateOrConnectWithoutTechnicianInput = {
     where: ServiceWhereUniqueInput
-    update: XOR<ServiceUpdateWithoutTechnicianInput, ServiceUncheckedUpdateWithoutTechnicianInput>
     create: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput>
   }
 
-  export type ServiceUpdateWithWhereUniqueWithoutTechnicianInput = {
-    where: ServiceWhereUniqueInput
-    data: XOR<ServiceUpdateWithoutTechnicianInput, ServiceUncheckedUpdateWithoutTechnicianInput>
+  export type ServiceCreateManyTechnicianInputEnvelope = {
+    data: ServiceCreateManyTechnicianInput | ServiceCreateManyTechnicianInput[]
+    skipDuplicates?: boolean
   }
 
-  export type ServiceUpdateManyWithWhereWithoutTechnicianInput = {
-    where: ServiceScalarWhereInput
-    data: XOR<ServiceUpdateManyMutationInput, ServiceUncheckedUpdateManyWithoutTechnicianInput>
+  export type UserCreateWithoutTechnicianProfileInput = {
+    id?: string
+    email: string
+    password: string
+    name: string
+    phone?: string | null
+    address?: string | null
+    profileImage?: string | null
+    role?: $Enums.UserRole
+    status?: $Enums.UserStatus
+    isEmailVerified?: boolean
+    lastLoginAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookingsAsCustomer?: BookingCreateNestedManyWithoutCustomerInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutCustomerInput
+    reviews?: ReviewCreateNestedManyWithoutCustomerInput
   }
 
-  export type ServiceScalarWhereInput = {
-    AND?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
-    OR?: ServiceScalarWhereInput[]
-    NOT?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
-    id?: StringFilter<"Service"> | string
-    technicianId?: StringFilter<"Service"> | string
-    categoryId?: StringFilter<"Service"> | string
-    title?: StringFilter<"Service"> | string
-    description?: StringFilter<"Service"> | string
-    price?: FloatFilter<"Service"> | number
-    discountedPrice?: FloatNullableFilter<"Service"> | number | null
-    durationMinutes?: IntNullableFilter<"Service"> | number | null
-    isActive?: BoolFilter<"Service"> | boolean
-    isFeatured?: BoolFilter<"Service"> | boolean
-    images?: StringNullableListFilter<"Service">
-    tags?: StringNullableListFilter<"Service">
-    createdAt?: DateTimeFilter<"Service"> | Date | string
-    updatedAt?: DateTimeFilter<"Service"> | Date | string
+  export type UserUncheckedCreateWithoutTechnicianProfileInput = {
+    id?: string
+    email: string
+    password: string
+    name: string
+    phone?: string | null
+    address?: string | null
+    profileImage?: string | null
+    role?: $Enums.UserRole
+    status?: $Enums.UserStatus
+    isEmailVerified?: boolean
+    lastLoginAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookingsAsCustomer?: BookingUncheckedCreateNestedManyWithoutCustomerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
+  }
+
+  export type UserCreateOrConnectWithoutTechnicianProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
   }
 
   export type AvailabilitySlotUpsertWithWhereUniqueWithoutTechnicianInput = {
@@ -17132,6 +17045,93 @@ export namespace Prisma {
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutTechnicianInput>
   }
 
+  export type ServiceUpsertWithWhereUniqueWithoutTechnicianInput = {
+    where: ServiceWhereUniqueInput
+    update: XOR<ServiceUpdateWithoutTechnicianInput, ServiceUncheckedUpdateWithoutTechnicianInput>
+    create: XOR<ServiceCreateWithoutTechnicianInput, ServiceUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type ServiceUpdateWithWhereUniqueWithoutTechnicianInput = {
+    where: ServiceWhereUniqueInput
+    data: XOR<ServiceUpdateWithoutTechnicianInput, ServiceUncheckedUpdateWithoutTechnicianInput>
+  }
+
+  export type ServiceUpdateManyWithWhereWithoutTechnicianInput = {
+    where: ServiceScalarWhereInput
+    data: XOR<ServiceUpdateManyMutationInput, ServiceUncheckedUpdateManyWithoutTechnicianInput>
+  }
+
+  export type ServiceScalarWhereInput = {
+    AND?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
+    OR?: ServiceScalarWhereInput[]
+    NOT?: ServiceScalarWhereInput | ServiceScalarWhereInput[]
+    id?: StringFilter<"Service"> | string
+    technicianId?: StringFilter<"Service"> | string
+    categoryId?: StringFilter<"Service"> | string
+    title?: StringFilter<"Service"> | string
+    description?: StringFilter<"Service"> | string
+    price?: FloatFilter<"Service"> | number
+    discountedPrice?: FloatNullableFilter<"Service"> | number | null
+    durationMinutes?: IntNullableFilter<"Service"> | number | null
+    isActive?: BoolFilter<"Service"> | boolean
+    isFeatured?: BoolFilter<"Service"> | boolean
+    images?: StringNullableListFilter<"Service">
+    tags?: StringNullableListFilter<"Service">
+    createdAt?: DateTimeFilter<"Service"> | Date | string
+    updatedAt?: DateTimeFilter<"Service"> | Date | string
+  }
+
+  export type UserUpsertWithoutTechnicianProfileInput = {
+    update: XOR<UserUpdateWithoutTechnicianProfileInput, UserUncheckedUpdateWithoutTechnicianProfileInput>
+    create: XOR<UserCreateWithoutTechnicianProfileInput, UserUncheckedCreateWithoutTechnicianProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTechnicianProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTechnicianProfileInput, UserUncheckedUpdateWithoutTechnicianProfileInput>
+  }
+
+  export type UserUpdateWithoutTechnicianProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingsAsCustomer?: BookingUpdateManyWithoutCustomerNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutCustomerNestedInput
+    reviews?: ReviewUpdateManyWithoutCustomerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTechnicianProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingsAsCustomer?: BookingUncheckedUpdateManyWithoutCustomerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
+  }
+
   export type TechnicianProfileCreateWithoutAvailabilitySlotsInput = {
     id?: string
     bio?: string | null
@@ -17146,10 +17146,10 @@ export namespace Prisma {
     skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTechnicianProfileInput
-    services?: ServiceCreateNestedManyWithoutTechnicianInput
     bookings?: BookingCreateNestedManyWithoutTechnicianInput
     reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
+    services?: ServiceCreateNestedManyWithoutTechnicianInput
+    user: UserCreateNestedOneWithoutTechnicianProfileInput
   }
 
   export type TechnicianProfileUncheckedCreateWithoutAvailabilitySlotsInput = {
@@ -17167,9 +17167,9 @@ export namespace Prisma {
     skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
     bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
     reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
+    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
   }
 
   export type TechnicianProfileCreateOrConnectWithoutAvailabilitySlotsInput = {
@@ -17202,10 +17202,10 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
-    services?: ServiceUpdateManyWithoutTechnicianNestedInput
     bookings?: BookingUpdateManyWithoutTechnicianNestedInput
     reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUpdateManyWithoutTechnicianNestedInput
+    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
   }
 
   export type TechnicianProfileUncheckedUpdateWithoutAvailabilitySlotsInput = {
@@ -17223,9 +17223,9 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
     reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type CategoryCreateWithoutSubCategoriesInput = {
@@ -17312,8 +17312,8 @@ export namespace Prisma {
     tags?: ServiceCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    technician: TechnicianProfileCreateNestedOneWithoutServicesInput
     bookings?: BookingCreateNestedManyWithoutServiceInput
+    technician: TechnicianProfileCreateNestedOneWithoutServicesInput
   }
 
   export type ServiceUncheckedCreateWithoutCategoryInput = {
@@ -17430,84 +17430,6 @@ export namespace Prisma {
     data: XOR<ServiceUpdateManyMutationInput, ServiceUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type TechnicianProfileCreateWithoutServicesInput = {
-    id?: string
-    bio?: string | null
-    experience?: number | null
-    hourlyRate?: number | null
-    averageRating?: number
-    totalReviews?: number
-    location?: string | null
-    isAvailable?: boolean
-    isVerified?: boolean
-    completedJobs?: number
-    skills?: TechnicianProfileCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTechnicianProfileInput
-    availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
-    bookings?: BookingCreateNestedManyWithoutTechnicianInput
-    reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
-  }
-
-  export type TechnicianProfileUncheckedCreateWithoutServicesInput = {
-    id?: string
-    userId: string
-    bio?: string | null
-    experience?: number | null
-    hourlyRate?: number | null
-    averageRating?: number
-    totalReviews?: number
-    location?: string | null
-    isAvailable?: boolean
-    isVerified?: boolean
-    completedJobs?: number
-    skills?: TechnicianProfileCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
-    bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
-    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
-  }
-
-  export type TechnicianProfileCreateOrConnectWithoutServicesInput = {
-    where: TechnicianProfileWhereUniqueInput
-    create: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
-  }
-
-  export type CategoryCreateWithoutServicesInput = {
-    id?: string
-    name: string
-    slug: string
-    description?: string | null
-    icon?: string | null
-    image?: string | null
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parentCategory?: CategoryCreateNestedOneWithoutSubCategoriesInput
-    subCategories?: CategoryCreateNestedManyWithoutParentCategoryInput
-  }
-
-  export type CategoryUncheckedCreateWithoutServicesInput = {
-    id?: string
-    name: string
-    slug: string
-    description?: string | null
-    icon?: string | null
-    image?: string | null
-    parentCategoryId?: string | null
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    subCategories?: CategoryUncheckedCreateNestedManyWithoutParentCategoryInput
-  }
-
-  export type CategoryCreateOrConnectWithoutServicesInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutServicesInput, CategoryUncheckedCreateWithoutServicesInput>
-  }
-
   export type BookingCreateWithoutServiceInput = {
     id?: string
     bookingNumber: string
@@ -17560,55 +17482,98 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TechnicianProfileUpsertWithoutServicesInput = {
-    update: XOR<TechnicianProfileUpdateWithoutServicesInput, TechnicianProfileUncheckedUpdateWithoutServicesInput>
+  export type CategoryCreateWithoutServicesInput = {
+    id?: string
+    name: string
+    slug: string
+    description?: string | null
+    icon?: string | null
+    image?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentCategory?: CategoryCreateNestedOneWithoutSubCategoriesInput
+    subCategories?: CategoryCreateNestedManyWithoutParentCategoryInput
+  }
+
+  export type CategoryUncheckedCreateWithoutServicesInput = {
+    id?: string
+    name: string
+    slug: string
+    description?: string | null
+    icon?: string | null
+    image?: string | null
+    parentCategoryId?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subCategories?: CategoryUncheckedCreateNestedManyWithoutParentCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutServicesInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutServicesInput, CategoryUncheckedCreateWithoutServicesInput>
+  }
+
+  export type TechnicianProfileCreateWithoutServicesInput = {
+    id?: string
+    bio?: string | null
+    experience?: number | null
+    hourlyRate?: number | null
+    averageRating?: number
+    totalReviews?: number
+    location?: string | null
+    isAvailable?: boolean
+    isVerified?: boolean
+    completedJobs?: number
+    skills?: TechnicianProfileCreateskillsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
+    bookings?: BookingCreateNestedManyWithoutTechnicianInput
+    reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
+    user: UserCreateNestedOneWithoutTechnicianProfileInput
+  }
+
+  export type TechnicianProfileUncheckedCreateWithoutServicesInput = {
+    id?: string
+    userId: string
+    bio?: string | null
+    experience?: number | null
+    hourlyRate?: number | null
+    averageRating?: number
+    totalReviews?: number
+    location?: string | null
+    isAvailable?: boolean
+    isVerified?: boolean
+    completedJobs?: number
+    skills?: TechnicianProfileCreateskillsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
+    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type TechnicianProfileCreateOrConnectWithoutServicesInput = {
+    where: TechnicianProfileWhereUniqueInput
     create: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
-    where?: TechnicianProfileWhereInput
   }
 
-  export type TechnicianProfileUpdateToOneWithWhereWithoutServicesInput = {
-    where?: TechnicianProfileWhereInput
-    data: XOR<TechnicianProfileUpdateWithoutServicesInput, TechnicianProfileUncheckedUpdateWithoutServicesInput>
+  export type BookingUpsertWithWhereUniqueWithoutServiceInput = {
+    where: BookingWhereUniqueInput
+    update: XOR<BookingUpdateWithoutServiceInput, BookingUncheckedUpdateWithoutServiceInput>
+    create: XOR<BookingCreateWithoutServiceInput, BookingUncheckedCreateWithoutServiceInput>
   }
 
-  export type TechnicianProfileUpdateWithoutServicesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    experience?: NullableIntFieldUpdateOperationsInput | number | null
-    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
-    averageRating?: FloatFieldUpdateOperationsInput | number
-    totalReviews?: IntFieldUpdateOperationsInput | number
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    completedJobs?: IntFieldUpdateOperationsInput | number
-    skills?: TechnicianProfileUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
-    availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
-    bookings?: BookingUpdateManyWithoutTechnicianNestedInput
-    reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
+  export type BookingUpdateWithWhereUniqueWithoutServiceInput = {
+    where: BookingWhereUniqueInput
+    data: XOR<BookingUpdateWithoutServiceInput, BookingUncheckedUpdateWithoutServiceInput>
   }
 
-  export type TechnicianProfileUncheckedUpdateWithoutServicesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    experience?: NullableIntFieldUpdateOperationsInput | number | null
-    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
-    averageRating?: FloatFieldUpdateOperationsInput | number
-    totalReviews?: IntFieldUpdateOperationsInput | number
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    completedJobs?: IntFieldUpdateOperationsInput | number
-    skills?: TechnicianProfileUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
-    bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
-    reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
+  export type BookingUpdateManyWithWhereWithoutServiceInput = {
+    where: BookingScalarWhereInput
+    data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutServiceInput>
   }
 
   export type CategoryUpsertWithoutServicesInput = {
@@ -17650,20 +17615,55 @@ export namespace Prisma {
     subCategories?: CategoryUncheckedUpdateManyWithoutParentCategoryNestedInput
   }
 
-  export type BookingUpsertWithWhereUniqueWithoutServiceInput = {
-    where: BookingWhereUniqueInput
-    update: XOR<BookingUpdateWithoutServiceInput, BookingUncheckedUpdateWithoutServiceInput>
-    create: XOR<BookingCreateWithoutServiceInput, BookingUncheckedCreateWithoutServiceInput>
+  export type TechnicianProfileUpsertWithoutServicesInput = {
+    update: XOR<TechnicianProfileUpdateWithoutServicesInput, TechnicianProfileUncheckedUpdateWithoutServicesInput>
+    create: XOR<TechnicianProfileCreateWithoutServicesInput, TechnicianProfileUncheckedCreateWithoutServicesInput>
+    where?: TechnicianProfileWhereInput
   }
 
-  export type BookingUpdateWithWhereUniqueWithoutServiceInput = {
-    where: BookingWhereUniqueInput
-    data: XOR<BookingUpdateWithoutServiceInput, BookingUncheckedUpdateWithoutServiceInput>
+  export type TechnicianProfileUpdateToOneWithWhereWithoutServicesInput = {
+    where?: TechnicianProfileWhereInput
+    data: XOR<TechnicianProfileUpdateWithoutServicesInput, TechnicianProfileUncheckedUpdateWithoutServicesInput>
   }
 
-  export type BookingUpdateManyWithWhereWithoutServiceInput = {
-    where: BookingScalarWhereInput
-    data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutServiceInput>
+  export type TechnicianProfileUpdateWithoutServicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    totalReviews?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    completedJobs?: IntFieldUpdateOperationsInput | number
+    skills?: TechnicianProfileUpdateskillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
+    bookings?: BookingUpdateManyWithoutTechnicianNestedInput
+    reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
+    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
+  }
+
+  export type TechnicianProfileUncheckedUpdateWithoutServicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    totalReviews?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    completedJobs?: IntFieldUpdateOperationsInput | number
+    skills?: TechnicianProfileUpdateskillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
+    reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type UserCreateWithoutBookingsAsCustomerInput = {
@@ -17680,10 +17680,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutCustomerInput
     reviews?: ReviewCreateNestedManyWithoutCustomerInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
+    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBookingsAsCustomerInput = {
@@ -17700,60 +17700,15 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBookingsAsCustomerInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutBookingsAsCustomerInput, UserUncheckedCreateWithoutBookingsAsCustomerInput>
-  }
-
-  export type TechnicianProfileCreateWithoutBookingsInput = {
-    id?: string
-    bio?: string | null
-    experience?: number | null
-    hourlyRate?: number | null
-    averageRating?: number
-    totalReviews?: number
-    location?: string | null
-    isAvailable?: boolean
-    isVerified?: boolean
-    completedJobs?: number
-    skills?: TechnicianProfileCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTechnicianProfileInput
-    services?: ServiceCreateNestedManyWithoutTechnicianInput
-    availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
-    reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
-  }
-
-  export type TechnicianProfileUncheckedCreateWithoutBookingsInput = {
-    id?: string
-    userId: string
-    bio?: string | null
-    experience?: number | null
-    hourlyRate?: number | null
-    averageRating?: number
-    totalReviews?: number
-    location?: string | null
-    isAvailable?: boolean
-    isVerified?: boolean
-    completedJobs?: number
-    skills?: TechnicianProfileCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
-    availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
-    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
-  }
-
-  export type TechnicianProfileCreateOrConnectWithoutBookingsInput = {
-    where: TechnicianProfileWhereUniqueInput
-    create: XOR<TechnicianProfileCreateWithoutBookingsInput, TechnicianProfileUncheckedCreateWithoutBookingsInput>
   }
 
   export type ServiceCreateWithoutBookingsInput = {
@@ -17769,8 +17724,8 @@ export namespace Prisma {
     tags?: ServiceCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    technician: TechnicianProfileCreateNestedOneWithoutServicesInput
     category: CategoryCreateNestedOneWithoutServicesInput
+    technician: TechnicianProfileCreateNestedOneWithoutServicesInput
   }
 
   export type ServiceUncheckedCreateWithoutBookingsInput = {
@@ -17793,6 +17748,51 @@ export namespace Prisma {
   export type ServiceCreateOrConnectWithoutBookingsInput = {
     where: ServiceWhereUniqueInput
     create: XOR<ServiceCreateWithoutBookingsInput, ServiceUncheckedCreateWithoutBookingsInput>
+  }
+
+  export type TechnicianProfileCreateWithoutBookingsInput = {
+    id?: string
+    bio?: string | null
+    experience?: number | null
+    hourlyRate?: number | null
+    averageRating?: number
+    totalReviews?: number
+    location?: string | null
+    isAvailable?: boolean
+    isVerified?: boolean
+    completedJobs?: number
+    skills?: TechnicianProfileCreateskillsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
+    reviewsReceived?: ReviewCreateNestedManyWithoutTechnicianInput
+    services?: ServiceCreateNestedManyWithoutTechnicianInput
+    user: UserCreateNestedOneWithoutTechnicianProfileInput
+  }
+
+  export type TechnicianProfileUncheckedCreateWithoutBookingsInput = {
+    id?: string
+    userId: string
+    bio?: string | null
+    experience?: number | null
+    hourlyRate?: number | null
+    averageRating?: number
+    totalReviews?: number
+    location?: string | null
+    isAvailable?: boolean
+    isVerified?: boolean
+    completedJobs?: number
+    skills?: TechnicianProfileCreateskillsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
+    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutTechnicianInput
+    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type TechnicianProfileCreateOrConnectWithoutBookingsInput = {
+    where: TechnicianProfileWhereUniqueInput
+    create: XOR<TechnicianProfileCreateWithoutBookingsInput, TechnicianProfileUncheckedCreateWithoutBookingsInput>
   }
 
   export type PaymentCreateWithoutBookingInput = {
@@ -17900,10 +17900,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUpdateManyWithoutCustomerNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookingsAsCustomerInput = {
@@ -17920,10 +17920,55 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type ServiceUpsertWithoutBookingsInput = {
+    update: XOR<ServiceUpdateWithoutBookingsInput, ServiceUncheckedUpdateWithoutBookingsInput>
+    create: XOR<ServiceCreateWithoutBookingsInput, ServiceUncheckedCreateWithoutBookingsInput>
+    where?: ServiceWhereInput
+  }
+
+  export type ServiceUpdateToOneWithWhereWithoutBookingsInput = {
+    where?: ServiceWhereInput
+    data: XOR<ServiceUpdateWithoutBookingsInput, ServiceUncheckedUpdateWithoutBookingsInput>
+  }
+
+  export type ServiceUpdateWithoutBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    images?: ServiceUpdateimagesInput | string[]
+    tags?: ServiceUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneRequiredWithoutServicesNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput
+  }
+
+  export type ServiceUncheckedUpdateWithoutBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    images?: ServiceUpdateimagesInput | string[]
+    tags?: ServiceUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TechnicianProfileUpsertWithoutBookingsInput = {
@@ -17951,10 +17996,10 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
-    services?: ServiceUpdateManyWithoutTechnicianNestedInput
     availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
     reviewsReceived?: ReviewUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUpdateManyWithoutTechnicianNestedInput
+    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
   }
 
   export type TechnicianProfileUncheckedUpdateWithoutBookingsInput = {
@@ -17972,54 +18017,9 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
     availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
     reviewsReceived?: ReviewUncheckedUpdateManyWithoutTechnicianNestedInput
-  }
-
-  export type ServiceUpsertWithoutBookingsInput = {
-    update: XOR<ServiceUpdateWithoutBookingsInput, ServiceUncheckedUpdateWithoutBookingsInput>
-    create: XOR<ServiceCreateWithoutBookingsInput, ServiceUncheckedCreateWithoutBookingsInput>
-    where?: ServiceWhereInput
-  }
-
-  export type ServiceUpdateToOneWithWhereWithoutBookingsInput = {
-    where?: ServiceWhereInput
-    data: XOR<ServiceUpdateWithoutBookingsInput, ServiceUncheckedUpdateWithoutBookingsInput>
-  }
-
-  export type ServiceUpdateWithoutBookingsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    isFeatured?: BoolFieldUpdateOperationsInput | boolean
-    images?: ServiceUpdateimagesInput | string[]
-    tags?: ServiceUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technician?: TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput
-    category?: CategoryUpdateOneRequiredWithoutServicesNestedInput
-  }
-
-  export type ServiceUncheckedUpdateWithoutBookingsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    technicianId?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    isFeatured?: BoolFieldUpdateOperationsInput | boolean
-    images?: ServiceUpdateimagesInput | string[]
-    tags?: ServiceUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type PaymentUpsertWithoutBookingInput = {
@@ -18130,8 +18130,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customer: UserCreateNestedOneWithoutBookingsAsCustomerInput
-    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     service: ServiceCreateNestedOneWithoutBookingsInput
+    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     review?: ReviewCreateNestedOneWithoutBookingInput
   }
 
@@ -18175,10 +18175,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingCreateNestedManyWithoutCustomerInput
-    reviews?: ReviewCreateNestedManyWithoutCustomerInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutCustomerInput
+    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -18195,10 +18195,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingUncheckedCreateNestedManyWithoutCustomerInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
+    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -18233,8 +18233,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: UserUpdateOneRequiredWithoutBookingsAsCustomerNestedInput
-    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     service?: ServiceUpdateOneRequiredWithoutBookingsNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     review?: ReviewUpdateOneWithoutBookingNestedInput
   }
 
@@ -18284,10 +18284,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUpdateManyWithoutCustomerNestedInput
-    reviews?: ReviewUpdateManyWithoutCustomerNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutCustomerNestedInput
+    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -18304,10 +18304,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUncheckedUpdateManyWithoutCustomerNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
+    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type BookingCreateWithoutReviewInput = {
@@ -18326,8 +18326,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     customer: UserCreateNestedOneWithoutBookingsAsCustomerInput
-    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     service: ServiceCreateNestedOneWithoutBookingsInput
+    technician: TechnicianProfileCreateNestedOneWithoutBookingsInput
     payment?: PaymentCreateNestedOneWithoutBookingInput
   }
 
@@ -18371,10 +18371,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingCreateNestedManyWithoutCustomerInput
-    payments?: PaymentCreateNestedManyWithoutCustomerInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutCustomerInput
+    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -18391,10 +18391,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingUncheckedCreateNestedManyWithoutCustomerInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
+    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -18416,10 +18416,10 @@ export namespace Prisma {
     skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTechnicianProfileInput
-    services?: ServiceCreateNestedManyWithoutTechnicianInput
     availabilitySlots?: AvailabilitySlotCreateNestedManyWithoutTechnicianInput
     bookings?: BookingCreateNestedManyWithoutTechnicianInput
+    services?: ServiceCreateNestedManyWithoutTechnicianInput
+    user: UserCreateNestedOneWithoutTechnicianProfileInput
   }
 
   export type TechnicianProfileUncheckedCreateWithoutReviewsReceivedInput = {
@@ -18437,9 +18437,9 @@ export namespace Prisma {
     skills?: TechnicianProfileCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
     availabilitySlots?: AvailabilitySlotUncheckedCreateNestedManyWithoutTechnicianInput
     bookings?: BookingUncheckedCreateNestedManyWithoutTechnicianInput
+    services?: ServiceUncheckedCreateNestedManyWithoutTechnicianInput
   }
 
   export type TechnicianProfileCreateOrConnectWithoutReviewsReceivedInput = {
@@ -18474,8 +18474,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: UserUpdateOneRequiredWithoutBookingsAsCustomerNestedInput
-    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     service?: ServiceUpdateOneRequiredWithoutBookingsNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     payment?: PaymentUpdateOneWithoutBookingNestedInput
   }
 
@@ -18525,10 +18525,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUpdateManyWithoutCustomerNestedInput
-    payments?: PaymentUpdateManyWithoutCustomerNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutCustomerNestedInput
+    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -18545,10 +18545,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUncheckedUpdateManyWithoutCustomerNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
+    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type TechnicianProfileUpsertWithoutReviewsReceivedInput = {
@@ -18576,10 +18576,10 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
-    services?: ServiceUpdateManyWithoutTechnicianNestedInput
     availabilitySlots?: AvailabilitySlotUpdateManyWithoutTechnicianNestedInput
     bookings?: BookingUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUpdateManyWithoutTechnicianNestedInput
+    user?: UserUpdateOneRequiredWithoutTechnicianProfileNestedInput
   }
 
   export type TechnicianProfileUncheckedUpdateWithoutReviewsReceivedInput = {
@@ -18597,9 +18597,9 @@ export namespace Prisma {
     skills?: TechnicianProfileUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
     availabilitySlots?: AvailabilitySlotUncheckedUpdateManyWithoutTechnicianNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutTechnicianNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -18616,10 +18616,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingCreateNestedManyWithoutCustomerInput
     payments?: PaymentCreateNestedManyWithoutCustomerInput
     reviews?: ReviewCreateNestedManyWithoutCustomerInput
+    technicianProfile?: TechnicianProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -18636,10 +18636,10 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
     bookingsAsCustomer?: BookingUncheckedCreateNestedManyWithoutCustomerInput
     payments?: PaymentUncheckedCreateNestedManyWithoutCustomerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutCustomerInput
+    technicianProfile?: TechnicianProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -18672,10 +18672,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUpdateManyWithoutCustomerNestedInput
     payments?: PaymentUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUpdateManyWithoutCustomerNestedInput
+    technicianProfile?: TechnicianProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -18692,10 +18692,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
     bookingsAsCustomer?: BookingUncheckedUpdateManyWithoutCustomerNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutCustomerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutCustomerNestedInput
+    technicianProfile?: TechnicianProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type BookingCreateManyCustomerInput = {
@@ -18715,6 +18715,17 @@ export namespace Prisma {
     technicianNotes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type NotificationCreateManyUserInput = {
+    id?: string
+    type: $Enums.NotificationType
+    title: string
+    message: string
+    data?: NullableJsonNullValueInput | InputJsonValue
+    isRead?: boolean
+    readAt?: Date | string | null
+    createdAt?: Date | string
   }
 
   export type PaymentCreateManyCustomerInput = {
@@ -18752,17 +18763,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type NotificationCreateManyUserInput = {
-    id?: string
-    type: $Enums.NotificationType
-    title: string
-    message: string
-    data?: NullableJsonNullValueInput | InputJsonValue
-    isRead?: boolean
-    readAt?: Date | string | null
-    createdAt?: Date | string
-  }
-
   export type BookingUpdateWithoutCustomerInput = {
     id?: StringFieldUpdateOperationsInput | string
     bookingNumber?: StringFieldUpdateOperationsInput | string
@@ -18778,8 +18778,8 @@ export namespace Prisma {
     technicianNotes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     service?: ServiceUpdateOneRequiredWithoutBookingsNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutBookingsNestedInput
     payment?: PaymentUpdateOneWithoutBookingNestedInput
     review?: ReviewUpdateOneWithoutBookingNestedInput
   }
@@ -18822,6 +18822,39 @@ export namespace Prisma {
     technicianNotes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    data?: NullableJsonNullValueInput | InputJsonValue
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    data?: NullableJsonNullValueInput | InputJsonValue
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    data?: NullableJsonNullValueInput | InputJsonValue
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentUpdateWithoutCustomerInput = {
@@ -18929,55 +18962,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type NotificationUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
-    title?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    data?: NullableJsonNullValueInput | InputJsonValue
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
-    title?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    data?: NullableJsonNullValueInput | InputJsonValue
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
-    title?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    data?: NullableJsonNullValueInput | InputJsonValue
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ServiceCreateManyTechnicianInput = {
-    id?: string
-    categoryId: string
-    title: string
-    description: string
-    price: number
-    discountedPrice?: number | null
-    durationMinutes?: number | null
-    isActive?: boolean
-    isFeatured?: boolean
-    images?: ServiceCreateimagesInput | string[]
-    tags?: ServiceCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type AvailabilitySlotCreateManyTechnicianInput = {
     id?: string
     dayOfWeek: number
@@ -19027,54 +19011,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ServiceUpdateWithoutTechnicianInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    isFeatured?: BoolFieldUpdateOperationsInput | boolean
-    images?: ServiceUpdateimagesInput | string[]
-    tags?: ServiceUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutServicesNestedInput
-    bookings?: BookingUpdateManyWithoutServiceNestedInput
-  }
-
-  export type ServiceUncheckedUpdateWithoutTechnicianInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    isFeatured?: BoolFieldUpdateOperationsInput | boolean
-    images?: ServiceUpdateimagesInput | string[]
-    tags?: ServiceUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookings?: BookingUncheckedUpdateManyWithoutServiceNestedInput
-  }
-
-  export type ServiceUncheckedUpdateManyWithoutTechnicianInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    isFeatured?: BoolFieldUpdateOperationsInput | boolean
-    images?: ServiceUpdateimagesInput | string[]
-    tags?: ServiceUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ServiceCreateManyTechnicianInput = {
+    id?: string
+    categoryId: string
+    title: string
+    description: string
+    price: number
+    discountedPrice?: number | null
+    durationMinutes?: number | null
+    isActive?: boolean
+    isFeatured?: boolean
+    images?: ServiceCreateimagesInput | string[]
+    tags?: ServiceCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AvailabilitySlotUpdateWithoutTechnicianInput = {
@@ -19228,6 +19178,56 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ServiceUpdateWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    images?: ServiceUpdateimagesInput | string[]
+    tags?: ServiceUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUpdateManyWithoutServiceNestedInput
+    category?: CategoryUpdateOneRequiredWithoutServicesNestedInput
+  }
+
+  export type ServiceUncheckedUpdateWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    images?: ServiceUpdateimagesInput | string[]
+    tags?: ServiceUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutServiceNestedInput
+  }
+
+  export type ServiceUncheckedUpdateManyWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    discountedPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    images?: ServiceUpdateimagesInput | string[]
+    tags?: ServiceUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CategoryCreateManyParentCategoryInput = {
     id?: string
     name: string
@@ -19309,8 +19309,8 @@ export namespace Prisma {
     tags?: ServiceUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    technician?: TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput
     bookings?: BookingUpdateManyWithoutServiceNestedInput
+    technician?: TechnicianProfileUpdateOneRequiredWithoutServicesNestedInput
   }
 
   export type ServiceUncheckedUpdateWithoutCategoryInput = {

@@ -6,17 +6,20 @@ FixItNow is a production-ready, highly secure, and scalable on-demand service ma
 
 ## 🚀 Tech Stack
 
-*   **Runtime:** Node.js (v18+ or v20+)
-*   **Framework:** Express.js with TypeScript
-*   **Database:** PostgreSQL
-*   **ORM:** Prisma ORM
-*   **Security:** Helmet, CORS, bcrypt, JSON Web Token (JWT)
-*   **Validation:** Zod
-*   **Logger:** Morgan
+* **Runtime:** Node.js (v18+ or v20+)
+* **Framework:** Express.js with TypeScript
+* **Database:** PostgreSQL
+* **ORM:** Prisma ORM
+* **Security:** Helmet, CORS, bcrypt, JSON Web Token (JWT)
+* **Validation:** Zod
+* **Logger:** Morgan
 
 ---
+
 # 📂 Project Architecture
+
 The project follows a Modular Architecture for scalability and clean separation of concerns:
+
 ```
 fixitnow-backend/
 ├── src/
@@ -95,24 +98,29 @@ fixitnow-backend/
 ├── README.md
 └── tsconfig.json
 ```
+
 ---
+
 # Security Features Implemented
-- Helmet: Secure HTTP headers to prevent common vulnerabilities.
 
-- CORS: Configured cross-origin resource sharing.
+* Helmet: Secure HTTP headers to prevent common vulnerabilities.
 
-- Data Validation: Runtime request schema validation enforced via Zod.
+* CORS: Configured cross-origin resource sharing.
 
-- Password Hashing: Secure cryptography with bcrypt.
+* Data Validation: Runtime request schema validation enforced via Zod.
 
-- Role-Based Access Control (RBAC): Strict endpoint protection based on authorization roles (Admin, Customer, Technician).
+* Password Hashing: Secure cryptography with bcrypt.
+
+* Role-Based Access Control (RBAC): Strict endpoint protection based on authorization roles (Admin, Customer, Technician).
 
 ---
 
 ## 📚 API Documentation
-- **Swagger UI:** http://localhost:5000/api-docs
-- **Postman Collection:** `/postman/FixItNow.postman_collection.json`
+
+* **Swagger UI:** <http://localhost:5000/api-docs>
+* **Postman Collection:** `/postman/FixItNow.postman_collection.json`
 
 ## 🔑 Admin Credentials
-- **Email:** admin@fixitnow.com
-- **Password:** admin123
+
+* **Email:** <admin@fixitnow.com>
+* **Password:** admin123

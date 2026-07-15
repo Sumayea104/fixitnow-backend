@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, Request, Response } from 'express';
+import { ErrorRequestHandler,  NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
 import { Prisma } from '../generated/prisma';
@@ -8,7 +8,8 @@ import AppError from '../errors/AppError';
 const errorHandler: ErrorRequestHandler = (
   err: any,
   req: Request,
-  res: Response
+  res: Response,
+  _next: NextFunction
 ): void => {
   let statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   let message = err.message || 'Something went wrong!';
