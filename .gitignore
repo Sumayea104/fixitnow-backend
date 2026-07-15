@@ -33,3 +33,7 @@ coverage/
 # TypeScript
 *.tsbuildinfo
 /generated/prisma
+
+
+# Postman collection sensitive environment variables
+postman/*.json

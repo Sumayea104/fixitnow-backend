@@ -16,6 +16,7 @@ import reviewRoutes from './modules/review/review.route';
 import { errorHandler } from './middlewares';
 import AppError from './errors/AppError';
 import config from './config/env';
+import { setupSwagger } from './swagger';
 
 const app: Application = express();
 
@@ -29,10 +30,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+// ==================== SWAGGER DOCUMENTATION ====================
+setupSwagger(app);
+
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);  
-app.use('/api/technician', technicianRoutes);
+app.use('/api/technicians', technicianRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/bookings', bookingRoutes); 
@@ -49,6 +55,8 @@ app.get('/health', (_req: Request, res: Response) => {
     environment: config.nodeEnv,
   });
 });
+
+
 
 // 404 handler
 app.use((req: Request, _res: Response, next: NextFunction) => {

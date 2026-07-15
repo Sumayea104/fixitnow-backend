@@ -109,3 +109,10 @@ fixitnow-backend/
 
 ---
 
+## 📚 API Documentation
+- **Swagger UI:** http://localhost:5000/api-docs
+- **Postman Collection:** `/postman/FixItNow.postman_collection.json`
+
+## 🔑 Admin Credentials
+- **Email:** admin@fixitnow.com
+- **Password:** admin123
