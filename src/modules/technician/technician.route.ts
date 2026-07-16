@@ -11,7 +11,7 @@ import {
   bookingIdSchema,
   technicianQuerySchema,
 } from './technician.validation';
-import { UserRole } from '../../generated/prisma';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 

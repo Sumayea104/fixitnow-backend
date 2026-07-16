@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UserStatus, BookingStatus } from '../../generated/prisma';
+import { UserStatus, BookingStatus } from '@prisma/client';
 
 // ==================== User Validation ====================
 

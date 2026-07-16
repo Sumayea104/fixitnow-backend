@@ -10,38 +10,22 @@ import {
   reviewIdSchema,
   reviewQuerySchema,
 } from './review.validation';
-import { UserRole } from '../../generated/prisma';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 
-// ==================== Public Routes ====================
-/**
- * @route   GET /api/reviews
- * @desc    Get all reviews with filters
- * @access  Public
- */
 router.get(
   '/',
   validateRequest(reviewQuerySchema),
   ReviewController.getAllReviews
 );
 
-/**
- * @route   GET /api/reviews/:id
- * @desc    Get review details
- * @access  Public
- */
 router.get(
   '/:id',
   validateRequest(reviewIdSchema),
   ReviewController.getReviewDetails
 );
 
-/**
- * @route   GET /api/reviews/technician/:technicianId
- * @desc    Get reviews for a specific technician
- * @access  Public
- */
 router.get(
   '/technician/:technicianId',
   validateRequest(reviewQuerySchema),
@@ -51,11 +35,6 @@ router.get(
 // ==================== Protected Routes (Customer Only) ====================
 router.use(authMiddleware);
 
-/**
- * @route   POST /api/reviews
- * @desc    Create a review
- * @access  Customer only
- */
 router.post(
   '/',
   roleMiddleware(UserRole.CUSTOMER),
@@ -63,11 +42,6 @@ router.post(
   ReviewController.createReview
 );
 
-/**
- * @route   PATCH /api/reviews/:id
- * @desc    Update a review
- * @access  Customer only
- */
 router.patch(
   '/:id',
   roleMiddleware(UserRole.CUSTOMER),
@@ -76,11 +50,6 @@ router.patch(
   ReviewController.updateReview
 );
 
-/**
- * @route   DELETE /api/reviews/:id
- * @desc    Delete a review
- * @access  Customer only
- */
 router.delete(
   '/:id',
   roleMiddleware(UserRole.CUSTOMER),
@@ -88,23 +57,12 @@ router.delete(
   ReviewController.deleteReview
 );
 
-/**
- * @route   POST /api/reviews/:id/helpful
- * @desc    Mark a review as helpful
- * @access  Authenticated users
- */
 router.post(
   '/:id/helpful',
   validateRequest(reviewIdSchema),
   ReviewController.markReviewHelpful
 );
 
-// ==================== Protected Routes (Technician Only) ====================
-/**
- * @route   POST /api/reviews/:id/reply
- * @desc    Reply to a review
- * @access  Technician only
- */
 router.post(
   '/:id/reply',
   roleMiddleware(UserRole.TECHNICIAN),

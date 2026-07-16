@@ -1,4 +1,4 @@
-import { BookingStatus } from '../../generated/prisma';
+import { BookingStatus } from '@prisma/client';
 
 export interface ICreateBooking {
   serviceId: string;

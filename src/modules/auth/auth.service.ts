@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { UserRole, UserStatus } from '../../generated/prisma';
+import { UserRole, UserStatus } from '@prisma/client'; 
 import prisma from '../../config/prisma';
 import config from '../../config/env';
 import AppError from '../../errors/AppError';

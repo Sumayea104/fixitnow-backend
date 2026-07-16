@@ -10,7 +10,7 @@ import {
   paymentIdSchema,
   paymentQuerySchema,
 } from './payment.validation';
-import { UserRole } from '../../generated/prisma';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 

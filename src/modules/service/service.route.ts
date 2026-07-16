@@ -9,27 +9,16 @@ import {
   serviceIdSchema,
   serviceQuerySchema,
 } from './service.validation';
-import { UserRole } from '../../generated/prisma';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 
-// ==================== Public Routes ====================
-/**
- * @route   GET /api/services
- * @desc    Get all services with filters
- * @access  Public
- */
 router.get(
   '/',
   validateRequest(serviceQuerySchema),
   ServiceController.getAllServices
 );
 
-/**
- * @route   GET /api/services/:id
- * @desc    Get service details with reviews
- * @access  Public
- */
 router.get(
   '/:id',
   validateRequest(serviceIdSchema),
@@ -40,22 +29,13 @@ router.get(
 router.use(authMiddleware);
 router.use(roleMiddleware(UserRole.TECHNICIAN));
 
-/**
- * @route   POST /api/services
- * @desc    Create a new service
- * @access  Technician only
- */
 router.post(
   '/',
   validateRequest(createServiceSchema),
   ServiceController.createService
 );
 
-/**
- * @route   PUT /api/services/:id
- * @desc    Update a service
- * @access  Technician only
- */
+
 router.put(
   '/:id',
   validateRequest(serviceIdSchema),
@@ -63,22 +43,12 @@ router.put(
   ServiceController.updateService
 );
 
-/**
- * @route   DELETE /api/services/:id
- * @desc    Delete a service
- * @access  Technician only
- */
 router.delete(
   '/:id',
   validateRequest(serviceIdSchema),
   ServiceController.deleteService
 );
 
-/**
- * @route   GET /api/services/technician/my-services
- * @desc    Get all services of the logged-in technician
- * @access  Technician only
- */
 router.get(
   '/technician/my-services',
   ServiceController.getTechnicianServices

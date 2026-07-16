@@ -1,4 +1,4 @@
-import { Prisma, UserStatus, BookingStatus } from '../../generated/prisma';
+import { Prisma, UserStatus, BookingStatus } from '@prisma/client';
 import prisma from '../../config/prisma';
 import AppError from '../../errors/AppError';
 import { StatusCodes } from 'http-status-codes';

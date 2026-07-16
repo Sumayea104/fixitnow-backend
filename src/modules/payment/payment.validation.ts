@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PaymentProvider } from '../../generated/prisma';
+import { PaymentProvider } from '@prisma/client';
 
 export const createPaymentSchema = z.object({
   body: z.object({

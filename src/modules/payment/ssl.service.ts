@@ -1,4 +1,4 @@
-import { PaymentStatus, PaymentProvider } from '../../generated/prisma';
+import { PaymentStatus, PaymentProvider } from '@prisma/client';
 import prisma from '../../config/prisma';
 import config from '../../config/env';
 import AppError from '../../errors/AppError';
