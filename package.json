@@ -8,10 +8,11 @@
     "dev": "ts-node-dev -r dotenv/config --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "postinstall": "prisma generate",
+    "prisma:generate": "npx prisma generate",
     "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
     "prisma:studio": "prisma studio --schema=prisma/schema.prisma",
     "prisma:seed": "ts-node prisma/seed.ts",
-    "vercel-build": "prisma generate && tsc"
+    "vercel-build": "npm run prisma:generate && npm run build"
   },
   "keywords": [
     "home-services",
