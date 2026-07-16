@@ -3,13 +3,7 @@
   "builds": [
     {
       "src": "dist/server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "prisma/**/*.prisma",
-          "src/generated/**/*"
-        ]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -17,5 +11,8 @@
       "src": "/(.*)",
       "dest": "dist/server.js"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }

@@ -1,13 +1,3 @@
-export const bookingStatus = {
-  REQUESTED: 'REQUESTED',
-  ACCEPTED: 'ACCEPTED',
-  DECLINED: 'DECLINED',
-  PAID: 'PAID',
-  IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED',
-} as const;
-
 export const bookingStatusTransitions: Record<string, string[]> = {
   REQUESTED: ['ACCEPTED', 'DECLINED', 'CANCELLED'],
   ACCEPTED: ['PAID', 'CANCELLED'],
@@ -18,6 +8,16 @@ export const bookingStatusTransitions: Record<string, string[]> = {
   CANCELLED: [],
 };
 
+export const bookingStatus = {
+  REQUESTED: 'REQUESTED',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED',
+  PAID: 'PAID',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
 export const bookingFilterableFields = [
   'status',
   'customerId',
@@ -27,8 +27,8 @@ export const bookingFilterableFields = [
 ];
 
 export const bookingSearchableFields = [
-  'bookingNumber',
-  'customer.name',
-  'technician.user.name',
+  'notes',
   'service.title',
+  'technician.user.name',
+  'customer.name',
 ];

@@ -2,9 +2,15 @@ import { Prisma, BookingStatus } from '../../generated/prisma';
 import prisma from '../../config/prisma';
 import AppError from '../../errors/AppError';
 import { StatusCodes } from 'http-status-codes';
-import { generateBookingNumber } from '../../utils/helpers';
 import { bookingStatusTransitions } from './booking.constant';
-import { ICreateBooking, IUpdateBooking } from './booking.interface';
+import { ICreateBooking } from './booking.interface';
+
+// Helper function to generate booking number
+const generateBookingNumber = (): string => {
+  const year = new Date().getFullYear();
+  const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  return `${year}-${random}`;
+};
 
 // ==================== Create Booking ====================
 export const createBooking = async (customerId: string, data: ICreateBooking) => {
@@ -211,13 +217,10 @@ export const getBookingDetails = async (bookingId: string, userId: string) => {
   return booking;
 };
 
-// ==================== Update Booking Status (Customer) ====================
+// ==================== Cancel Booking (Customer) ====================
 export const cancelBooking = async (bookingId: string, userId: string, reason?: string) => {
   const booking = await prisma.booking.findUnique({
     where: { id: bookingId },
-    include: {
-      customer: true,
-    },
   });
 
   if (!booking) {
@@ -306,8 +309,7 @@ export const updateBookingStatusByTechnician = async (
   }
 
   // Validate status transition
-  const validTransitions = bookingStatusTransitions;
-  if (!validTransitions[booking.status]?.includes(status)) {
+  if (!bookingStatusTransitions[booking.status]?.includes(status)) {
     throw new AppError(
       StatusCodes.BAD_REQUEST,
       `Cannot transition from ${booking.status} to ${status}`

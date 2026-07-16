@@ -13,7 +13,6 @@ const register = async (data: {
   phone?: string;
   role: UserRole;
 }) => {
-  // Check if user already exists
   const existingUser = await prisma.user.findUnique({
     where: { email: data.email },
   });

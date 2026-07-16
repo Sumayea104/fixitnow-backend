@@ -6,8 +6,8 @@ import BookingService from './booking.service';
 
 // ==================== Create Booking ====================
 const createBooking = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const customerId = req.user.id;
-  const result = await BookingService.createBooking(customerId, req.body);
+  const userId = req.user.id;
+  const result = await BookingService.createBooking(userId, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
@@ -33,8 +33,8 @@ const getUserBookings = catchAsync(async (req: Request & { user?: any }, res: Re
 
 // ==================== Get Booking Details ====================
 const getBookingDetails = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const { id } = req.params;
   const userId = req.user.id;
+  const { id } = req.params;
   const result = await BookingService.getBookingDetails(id, userId);
 
   sendResponse(res, {
@@ -45,12 +45,12 @@ const getBookingDetails = catchAsync(async (req: Request & { user?: any }, res: 
   });
 });
 
-// ==================== Cancel Booking (Customer) ====================
+// ==================== Cancel Booking ====================
 const cancelBooking = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const { id } = req.params;
   const userId = req.user.id;
-  const { cancellationReason } = req.body;
-  const result = await BookingService.cancelBooking(id, userId, cancellationReason);
+  const { id } = req.params;
+  const { reason } = req.body;
+  const result = await BookingService.cancelBooking(id, userId, reason);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -61,22 +61,22 @@ const cancelBooking = catchAsync(async (req: Request & { user?: any }, res: Resp
 });
 
 // ==================== Update Booking Status (Technician) ====================
-const updateBookingStatusByTechnician = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const { id } = req.params;
+const updateBookingStatus = catchAsync(async (req: Request & { user?: any }, res: Response) => {
   const userId = req.user.id;
+  const { id } = req.params;
   const { status } = req.body;
   const result = await BookingService.updateBookingStatusByTechnician(id, userId, status);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: `Booking ${status.toLowerCase()} successfully`,
+    message: `Booking status updated to ${status}`,
     data: result,
   });
 });
 
-// ==================== Get Booking Status History (Admin) ====================
-const getBookingStatusHistory = catchAsync(async (req: Request, res: Response) => {
+// ==================== Get Booking History (Admin) ====================
+const getBookingHistory = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await BookingService.getBookingStatusHistory(id);
 
@@ -88,13 +88,12 @@ const getBookingStatusHistory = catchAsync(async (req: Request, res: Response) =
   });
 });
 
+// ==================== Export ====================
 export const BookingController = {
   createBooking,
   getUserBookings,
   getBookingDetails,
   cancelBooking,
-  updateBookingStatusByTechnician,
-  getBookingStatusHistory,
+  updateBookingStatus,
+  getBookingHistory,
 };
-
-export default BookingController;

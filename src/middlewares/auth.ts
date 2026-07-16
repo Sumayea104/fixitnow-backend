@@ -2,15 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import { config } from '../config/env';
+
 import { UserRole } from '../generated/prisma';
-import { IUserPayload } from '../interfaces';
+import { IJwtPayload } from '../interfaces';
 import AppError from '../errors/AppError';
 import catchAsync from '../utils/catchAsync';
 
 declare global {
   namespace Express {
     interface Request {
-      user?: IUserPayload;
+      user?: IJwtPayload;
     }
   }
 }

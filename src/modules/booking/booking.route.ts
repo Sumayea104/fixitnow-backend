@@ -5,7 +5,8 @@ import roleMiddleware from '../../middlewares/role';
 import { BookingController } from './booking.controller';
 import {
   createBookingSchema,
-  updateBookingSchema,
+  updateBookingStatusSchema,
+  cancelBookingSchema,
   bookingIdSchema,
   bookingQuerySchema,
 } from './booking.validation';
@@ -13,82 +14,56 @@ import { UserRole } from '../../generated/prisma';
 
 const router = express.Router();
 
-// ==================== All Booking Routes (Authenticated) ====================
+// All routes require authentication
 router.use(authMiddleware);
 
 // ==================== Customer Routes ====================
-/**
- * @route   POST /api/bookings
- * @desc    Create a new booking (Customer only)
- * @access  Customer only
- */
+// Create booking (Customer only)
 router.post(
   '/',
-  roleMiddleware(UserRole.CUSTOMER),
   validateRequest(createBookingSchema),
   BookingController.createBooking
 );
 
-/**
- * @route   GET /api/bookings
- * @desc    Get user's bookings
- * @access  Authenticated (Customer/Technician)
- */
+// Get user's bookings
 router.get(
   '/',
   validateRequest(bookingQuerySchema),
   BookingController.getUserBookings
 );
 
-/**
- * @route   GET /api/bookings/:id
- * @desc    Get booking details
- * @access  Authenticated (Customer/Technician)
- */
+// Get booking details
 router.get(
   '/:id',
   validateRequest(bookingIdSchema),
   BookingController.getBookingDetails
 );
 
-/**
- * @route   PATCH /api/bookings/:id/cancel
- * @desc    Cancel booking (Customer only)
- * @access  Customer only
- */
+// Cancel booking (Customer only)
 router.patch(
   '/:id/cancel',
-  roleMiddleware(UserRole.CUSTOMER),
   validateRequest(bookingIdSchema),
-  validateRequest(updateBookingSchema),
+  validateRequest(cancelBookingSchema),
   BookingController.cancelBooking
 );
 
 // ==================== Technician Routes ====================
-/**
- * @route   PATCH /api/bookings/:id/status
- * @desc    Update booking status (Technician only)
- * @access  Technician only
- */
+// Update booking status (Technician only)
 router.patch(
   '/:id/status',
-  roleMiddleware(UserRole.TECHNICIAN),
   validateRequest(bookingIdSchema),
-  validateRequest(updateBookingSchema),
-  BookingController.updateBookingStatusByTechnician
+  validateRequest(updateBookingStatusSchema),
+  roleMiddleware(UserRole.TECHNICIAN),
+  BookingController.updateBookingStatus
 );
 
 // ==================== Admin Routes ====================
-/**
- * @route   GET /api/bookings/:id/history
- * @desc    Get booking status history (Admin only)
- * @access  Admin only
- */
+// Get booking history (Admin only)
 router.get(
   '/:id/history',
-  roleMiddleware(UserRole.ADMIN),
   validateRequest(bookingIdSchema),
-  BookingController.getBookingStatusHistory
+  roleMiddleware(UserRole.ADMIN),
+  BookingController.getBookingHistory
 );
 
 export default router;

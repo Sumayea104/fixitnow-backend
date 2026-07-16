@@ -16,11 +16,11 @@ FixItNow is a production-ready, highly secure, and scalable on-demand service ma
 
 ---
 
-# 📂 Project Architecture
+## 📂 Project Architecture
 
 The project follows a Modular Architecture for scalability and clean separation of concerns:
 
-```
+```text
 fixitnow-backend/
 ├── src/
 │   ├── config/
@@ -101,7 +101,7 @@ fixitnow-backend/
 
 ---
 
-# Security Features Implemented
+## Security Features Implemented
 
 * Helmet: Secure HTTP headers to prevent common vulnerabilities.
 

@@ -1,15 +1,14 @@
-import { ErrorRequestHandler,  NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
-import { Prisma } from '../generated/prisma';
 import config from '../config/env';
 import AppError from '../errors/AppError';
 
 const errorHandler: ErrorRequestHandler = (
   err: any,
   req: Request,
-  res: Response,
-  _next: NextFunction
+  res: Response
+  // next parameter removed
 ): void => {
   let statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   let message = err.message || 'Something went wrong!';
@@ -30,7 +29,7 @@ const errorHandler: ErrorRequestHandler = (
     errorDetails = err;
   }
   // Handle Prisma Known Errors
-  else if (err instanceof Prisma.PrismaClientKnownRequestError) {
+  else if (err.name === 'PrismaClientKnownRequestError') {
     statusCode = StatusCodes.BAD_REQUEST;
     
     switch (err.code) {
@@ -66,7 +65,7 @@ const errorHandler: ErrorRequestHandler = (
     errorDetails = err;
   }
   // Handle Prisma Validation Errors
-  else if (err instanceof Prisma.PrismaClientValidationError) {
+  else if (err.name === 'PrismaClientValidationError') {
     statusCode = StatusCodes.BAD_REQUEST;
     message = 'Invalid data provided';
     errorDetails = err;
@@ -90,7 +89,7 @@ const errorHandler: ErrorRequestHandler = (
     method: req.method,
     statusCode,
     message,
-    error: err,
+    error: err.message,
   });
 
   res.status(statusCode).json({
