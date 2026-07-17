@@ -4,7 +4,7 @@ import { BookingStatus } from '@prisma/client';
 // Create booking validation
 export const createBookingSchema = z.object({
   body: z.object({
-    serviceId: z.string().uuid('Invalid service ID'),
+    serviceId: z.string({ required_error: "Service ID is required" }),
     scheduledDate: z.string().datetime('Invalid date format'),
     scheduledTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format (HH:MM)'),
     durationMinutes: z.number().int().positive().optional(),
