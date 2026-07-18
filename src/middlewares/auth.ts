@@ -17,7 +17,8 @@ declare global {
 }
 
 const authMiddleware = catchAsync(async (req: Request, _res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  
+  const token = req.headers.authorization?.split(' ')[1] || req.cookies?.token;
 
   if (!token) {
     throw new AppError(StatusCodes.UNAUTHORIZED, 'You are not logged in');

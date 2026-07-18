@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser'; // 1️⃣ এটি ইমপোর্ট করুন
 import { StatusCodes } from 'http-status-codes';
 
 import authRoutes from './modules/auth/auth.route';
@@ -29,6 +30,7 @@ app.use(cors({
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); // 2️⃣ express.json()-এর ঠিক নিচে মিডেলওয়্যারটি যুক্ত করুন
 
 // Swagger Documentation
 setupSwagger(app);

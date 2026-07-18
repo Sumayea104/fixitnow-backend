@@ -14,7 +14,7 @@ FixItNow is a production-ready, highly secure, and scalable on-demand service ma
 | **Postman Collection** | <https://github.com/Sumayea104/fixitnow-backend/blob/main/postman/FixItNow.postman_collection.json> |
 | **Admin Email** | <admin@fixitnow.com> |
 | **Admin Password** | admin123 |
-| **Demo Video** | *(আপনার ভিডিও লিংক দিন)* |
+| **Demo Video** | *coming soon* |
 
 ---
 
@@ -209,9 +209,16 @@ fixitnow-backend/
 
 ---
 
+## 🛠️ Challenges & Learnings
+
+- **Dual Payment Gateway Integration:** Implementing both Stripe and SSLCommerz required setting up distinct webhook handlers and routing logic to seamlessly manage international and local currency payments.
+- **Role-Based Routing:** Designing a strict middleware-driven RBAC layer ensuring that Customers, Technicians, and Admins can only access their respective operational endpoints securely.
+
+---
+
 ## 📚 API Documentation
 
-- **Swagger UI:** [https://fixitnow-backend-m1ur.onrender.com/api-docs](https://fixitnow-backend-m1ur.onrender.com/api-docs)
+- **Swagger UI:** [https://fixitnow-backend-m1ur.onrender.com](https://fixitnow-backend-m1ur.onrender.com)
 - **Postman Collection:** [FixItNow.postman_collection.json](https://github.com/Sumayea104/fixitnow-backend/blob/main/postman/FixItNow.postman_collection.json)
 
 ## 🔑 Admin Credentials
