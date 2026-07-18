@@ -38,7 +38,7 @@ export const cancelBookingSchema = z.object({
 // Booking ID param validation
 export const bookingIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid booking ID'),
+    id: z.string({ required_error: "Booking ID is required" })
   }),
 });
 

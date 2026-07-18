@@ -21,7 +21,7 @@ const options: swaggerJsdoc.Options = {
         description: 'Development Server',
       },
       {
-        url: 'https://fixitnow-backend-five.vercel.app',
+        url: 'https://fixitnow-backend-m1ur.onrender.com', // 🌟 লাইভ রেন্ডার ইউআরএল আপডেট করা হয়েছে
         description: 'Production Server',
       },
     ],
@@ -40,7 +40,13 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  apis: ['./src/modules/**/*.ts'],
+
+  apis: [
+    './src/modules/**/*.route.ts',
+    './dist/modules/**/*.route.js',
+    './src/app.ts',
+    './dist/app.js'
+  ],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);
