@@ -21,13 +21,13 @@ export const createPayment = async (customerId: string, bookingId: string, provi
     throw new AppError(StatusCodes.NOT_FOUND, 'Booking not found');
   }
 
-  // if (booking.customerId !== customerId) {
-  //   throw new AppError(StatusCodes.FORBIDDEN, 'You do not have access to this booking');
-  // }
+  if (booking.customerId !== customerId) {
+    throw new AppError(StatusCodes.FORBIDDEN, 'You do not have access to this booking');
+  }
 
-  // if (booking.status !== 'ACCEPTED') {
-  //   throw new AppError(StatusCodes.BAD_REQUEST, 'Booking must be accepted before payment');
-  // }
+  if (booking.status !== 'ACCEPTED') {
+    throw new AppError(StatusCodes.BAD_REQUEST, 'Booking must be accepted before payment');
+  }
 
   const existingPayment = await prisma.payment.findUnique({
     where: { bookingId },
