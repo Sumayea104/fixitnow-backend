@@ -212,7 +212,12 @@ fixitnow-backend/
 ## 🛠️ Challenges & Learnings
 
 - **Dual Payment Gateway Integration:** Implementing both Stripe and SSLCommerz required setting up distinct webhook handlers and routing logic to seamlessly manage international and local currency payments.
+
 - **Role-Based Routing:** Designing a strict middleware-driven RBAC layer ensuring that Customers, Technicians, and Admins can only access their respective operational endpoints securely.
+
+- **Prisma Client & Vercel Deployment:** Initially deploying the backend on Vercel caused database connection failures as the Prisma Client wasn't generated during the build phase. This was resolved by configuring a custom pre-build script (`"vercel-build": "prisma generate && tsc -b"`) in `package.json`.
+
+- **Cookie-Parser Migration (Automation):** Replaced tedious manual `Authorization: Bearer <token>` token copy-pasting in Postman by migrating to secure **HTTP-Only Cookies**. The backend now automatically injects and stores the JWT in client storage upon login, automating the authentication flow.
 
 ---
 
