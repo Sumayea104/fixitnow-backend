@@ -40,13 +40,13 @@ export const updateBookingStatusSchema = z.object({
 // ==================== ID Param Validation ====================
 export const technicianIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid technician ID'),
+    id: z.string({ required_error: "Technician ID is required" }),
   }),
 });
 
 export const bookingIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid booking ID'),
+    id: z.string({ required_error: "Booking ID is required" }),
   }),
 });
 
