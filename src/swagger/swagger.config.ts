@@ -11,9 +11,7 @@ const options: swaggerJsdoc.Options = {
         name: 'FixItNow Team',
         email: 'support@fixitnow.com',
       },
-      license: {
-        name: 'ISC',
-      },
+      
     },
     servers: [
       {

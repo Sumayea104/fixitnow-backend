@@ -17,7 +17,7 @@ export const createServiceSchema = z.object({
 
 export const updateServiceSchema = z.object({
   body: z.object({
-    categoryId: z.string().uuid('Invalid category ID').optional(),
+    categoryId: z.string({ required_error: 'Category ID must be a string' }).optional(), 
     title: z.string().min(3, 'Title must be at least 3 characters').max(100, 'Title cannot exceed 100 characters').optional(),
     description: z.string().min(10, 'Description must be at least 10 characters').max(1000, 'Description cannot exceed 1000 characters').optional(),
     price: z.number().min(0, 'Price must be a positive number').optional(),
@@ -32,7 +32,7 @@ export const updateServiceSchema = z.object({
 
 export const serviceIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid service ID'),
+    id: z.string({ required_error: 'Service ID is required' }), 
   }),
 });
 
@@ -47,7 +47,7 @@ export const serviceQuerySchema = z.object({
     minPrice: z.coerce.number().min(0).optional(),
     maxPrice: z.coerce.number().min(0).optional(),
     minRating: z.coerce.number().min(0).max(5).optional(),
-    technicianId: z.string().uuid('Invalid technician ID').optional(),
+    technicianId: z.string({ required_error: 'Technician ID must be a string' }).optional(), 
     isFeatured: z.enum(['true', 'false']).transform(val => val === 'true').optional(),
     location: z.string().optional(),
   }),

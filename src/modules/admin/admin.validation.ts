@@ -13,7 +13,7 @@ export const updateUserStatusSchema = z.object({
 
 export const userIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid user ID'),
+    id: z.string({ required_error: 'User ID is required' }),
   }),
 });
 
@@ -37,7 +37,7 @@ export const updateBookingStatusSchema = z.object({
 
 export const bookingIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid booking ID'),
+    id: z.string({ required_error: 'Booking ID is required' }), 
   }),
 });
 
@@ -53,7 +53,7 @@ export const verifyTechnicianSchema = z.object({
 
 export const technicianIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid technician ID'),
+    id: z.string({ required_error: 'Technician ID is required' }),
   }),
 });
 
@@ -84,7 +84,7 @@ export const updateCategorySchema = z.object({
 
 export const categoryIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid category ID'),
+    id: z.string({ required_error: 'Category ID is required' }), 
   }),
 });
 

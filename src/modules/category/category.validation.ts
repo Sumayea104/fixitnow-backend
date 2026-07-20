@@ -25,6 +25,6 @@ export const updateCategorySchema = z.object({
 
 export const categoryIdSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid category ID'),
+    id: z.string({ required_error: 'Category ID is required' }), 
   }),
 });
