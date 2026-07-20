@@ -19,7 +19,7 @@ const options: swaggerJsdoc.Options = {
         description: 'Development Server',
       },
       {
-        url: 'https://fixitnow-backend-m1ur.onrender.com', // 🌟 লাইভ রেন্ডার ইউআরএল আপডেট করা হয়েছে
+        url: 'https://fixitnow-backend-m1ur.onrender.com', 
         description: 'Production Server',
       },
     ],
