@@ -15,7 +15,7 @@ FixItNow is a production-ready, highly secure, and scalable on-demand service ma
 | **Admin Email** | <admin@fixitnow.com> |
 | **Admin Password** | admin123 |
 | **Demo Video** | [🎬](https://drive.google.com/file/d/1ZnA8SPjRN09Tsbl3T71ODM8wWyxjpmQd/view?usp=sharing) |
-
+> ⚠️ These credentials are for testing and demonstration only.
 ---
 
 ## 🚀 Tech Stack
@@ -223,7 +223,7 @@ fixitnow-backend/
 
 ## 📚 API Documentation
 
-- **Swagger UI:** [https://fixitnow-backend-m1ur.onrender.com](https://fixitnow-backend-m1ur.onrender.com)
+- **Swagger UI:** [fixitnow-backend-m1ur.onrender.com/api-docs](https://fixitnow-backend-m1ur.onrender.com/api-docs/)
 - **Postman Collection:** [FixItNow.postman_collection.json](https://github.com/Sumayea104/fixitnow-backend/blob/main/postman/FixItNow.postman_collection.json)
 
 ## 🔑 Admin Credentials
@@ -232,7 +232,7 @@ fixitnow-backend/
 |------------|-------|
 | **Email** | `admin@fixitnow.com` |
 | **Password** | `admin123` |
-
+> ⚠️ These credentials are for testing and demonstration only.
 ---
 
 ## 🌐 Live API
