@@ -14,7 +14,7 @@ FixItNow is a production-ready, highly secure, and scalable on-demand service ma
 | **Postman Collection** | <https://github.com/Sumayea104/fixitnow-backend/blob/main/postman/FixItNow.postman_collection.json> |
 | **Admin Email** | <admin@fixitnow.com> |
 | **Admin Password** | admin123 |
-| **Demo Video** | *coming soon* |
+| **Demo Video** | [🎬](https://drive.google.com/file/d/1ZnA8SPjRN09Tsbl3T71ODM8wWyxjpmQd/view?usp=sharing) |
 
 ---
 
