@@ -132,92 +132,132 @@ fixitnow-backend/
 
 ## 📚 API Endpoints
 
-### Base URL: [FixitNow-Backend](https://fixitnow-backend-m1ur.onrender.com)
-
-### Authentication
-
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/register` | Register a new user | ❌ |
-| POST | `/api/auth/login` | Login user | ❌ |
-| GET | `/api/auth/me` | Get current user profile | ✅ |
-
-### Admin (Admin Only)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/users` | Get all users |
-| PATCH | `/api/admin/users/:id/status` | Update user status (ban/unban) |
-| GET | `/api/admin/bookings` | Get all bookings |
-| GET | `/api/admin/dashboard/stats` | Get dashboard statistics |
-| POST | `/api/admin/categories` | Create a new category |
-| GET | `/api/admin/categories` | Get all categories |
-| PATCH | `/api/admin/categories/:id` | Update a category |
-| DELETE | `/api/admin/categories/:id` | Delete a category |
-| PATCH | `/api/admin/technicians/:id/verify` | Verify a technician |
-
-### Technician (Technician Only)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| PUT | `/api/technicians/profile` | Update technician profile |
-| PUT | `/api/technicians/availability` | Update availability slots |
-| GET | `/api/technicians/bookings` | Get technician's bookings |
-| PATCH | `/api/technicians/bookings/:id/status` | Update booking status (accept/decline/complete) |
-| GET | `/api/technicians/stats` | Get technician statistics |
-
-### Customer
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/bookings` | Create a new booking |
-| GET | `/api/bookings` | Get user's bookings |
-| GET | `/api/bookings/:id` | Get booking details |
-| PATCH | `/api/bookings/:id/cancel` | Cancel a booking |
-
-### Payment
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/payments/create` | Create a payment intent/session |
-| GET | `/api/payments` | Get user's payment history |
-| GET | `/api/payments/:id` | Get payment details |
-
-### Reviews
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/reviews` | Create a review after job completion |
-
-### Public
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/services` | Get all services with filters |
-| GET | `/api/technicians` | Get all technicians with filters |
-| GET | `/api/technicians/:id` | Get technician profile with reviews |
-| GET | `/api/categories` | Get all service categories |
-
-### Documentation
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/` | API root information |
-| GET | `/health` | Health check |
-| GET | `/api-docs` | Swagger UI documentation |
-| GET | `/api-docs.json` | Swagger JSON specification |
+**Base URL:** `https://fixitnow-backend-m1ur.onrender.com`
 
 ---
 
-## 🛠️ Challenges & Learnings
+### 🔑 Authentication
 
-- **Dual Payment Gateway Integration:** Implementing both Stripe and SSLCommerz required setting up distinct webhook handlers and routing logic to seamlessly manage international and local currency payments.
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Register a new user |
+| `POST` | `/api/auth/login` | User login |
+| `GET` | `/api/auth/me` | Get current logged-in user details |
 
-- **Role-Based Routing:** Designing a strict middleware-driven RBAC layer ensuring that Customers, Technicians, and Admins can only access their respective operational endpoints securely.
+---
 
-- **Prisma Client & Vercel Deployment:** Initially deploying the backend on Vercel caused database connection failures as the Prisma Client wasn't generated during the build phase. This was resolved by configuring a custom pre-build script (`"vercel-build": "prisma generate && tsc -b"`) in `package.json`.
+### 👤 Users
 
-- **Cookie-Parser Migration (Automation):** Replaced tedious manual `Authorization: Bearer <token>` token copy-pasting in Postman by migrating to secure **HTTP-Only Cookies**. The backend now automatically injects and stores the JWT in client storage upon login, automating the authentication flow.
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :---: |
+| `GET` | `/api/users/profile` | Get current user profile | Private |
+| `PUT` | `/api/users/profile` | Update user profile | Private |
+| `PATCH` | `/api/users/change-password` | Change user password | Private |
+| `GET` | `/api/users` | Get all users | Admin |
+| `GET` | `/api/users/:id` | Get user by ID | Admin |
+| `PATCH` | `/api/users/:id/status` | Update user status | Admin |
+
+---
+
+### 👑 Admin
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/admin/dashboard/stats` | Get platform dashboard statistics |
+| `GET` | `/api/admin/users` | Get all users with filters |
+| `GET` | `/api/admin/users/:id` | Get user details by ID |
+| `PATCH` | `/api/admin/users/:id/status` | Update user status |
+| `POST` | `/api/admin/categories` | Create a new service category |
+| `GET` | `/api/admin/categories` | Get all categories |
+| `PATCH` | `/api/admin/categories/:id` | Update a category |
+| `DELETE` | `/api/admin/categories/:id` | Delete a category |
+
+---
+
+### 🛠️ Technicians
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/technicians` | Get all technicians with filters |
+| `GET` | `/api/technicians/:id` | Get technician profile by ID |
+| `PUT` | `/api/technicians/profile` | Update technician profile |
+| `PUT` | `/api/technicians/availability` | Update technician availability slots |
+| `GET` | `/api/technicians/bookings` | Get technician's bookings |
+| `PATCH` | `/api/technicians/bookings/:id` | Update booking status |
+| `GET` | `/api/technicians/stats` | Get technician statistics |
+
+---
+
+### 📅 Bookings
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/bookings` | Create a new booking |
+| `GET` | `/api/bookings` | Get current user's bookings |
+| `GET` | `/api/bookings/:id` | Get booking details by ID |
+| `PATCH` | `/api/bookings/:id/cancel` | Cancel a booking |
+| `PATCH` | `/api/bookings/:id/status` | Update booking status (Technician only) |
+
+---
+
+### 💳 Payments
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/payments/create` | Create a payment |
+| `GET` | `/api/payments` | Get payment history |
+| `GET` | `/api/payments/:id` | Get payment details |
+| `PATCH` | `/api/payments/confirm/:id` | Confirm payment |
+
+---
+
+### ⭐ Reviews
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/reviews` | Get all reviews with filters |
+| `POST` | `/api/reviews` | Create a review |
+| `GET` | `/api/reviews/:id` | Get review details by ID |
+| `PATCH` | `/api/reviews/:id` | Update a review |
+| `DELETE` | `/api/reviews/:id` | Delete a review |
+| `GET` | `/api/reviews/technician/:technicianId` | Get all reviews for a technician |
+| `POST` | `/api/reviews/:id/helpful` | Mark a review as helpful |
+| `POST` | `/api/reviews/:id/reply` | Reply to a review |
+
+---
+
+## 💡 Challenges & Key Learnings
+
+### 🚀 Technical Challenges & Solutions
+
+1. **Dual Payment Gateway Integration (Stripe & SSLCommerz):**
+   - **Challenge:** Integrating both Stripe and SSLCommerz required managing distinct transaction flows, payload structures, and webhook handlers for international and local currency payments seamlessly.
+   - **Solution:** Designed a unified payment service module with isolated routing logic and dedicated webhook listeners to process real-time status updates from both gateways securely.
+
+2. **Role-Based Routing & Security (RBAC):**
+   - **Challenge:** Restricting route access cleanly across three distinct user roles (`Customer`, `Technician`, and `Admin`) without repetitive permission logic.
+   - **Solution:** Implemented a strict, middleware-driven Role-Based Access Control (RBAC) layer (`verifyToken`, `verifyAdmin`, `verifyTechnician`) that validates JWTs and authorizes requests based on user roles before reaching controller logic.
+
+3. **Prisma Client & Vercel Deployment Issues:**
+   - **Challenge:** Initially deploying the backend on Vercel caused database connection failures as the Prisma Client wasn't generated during the automated build phase.
+   - **Solution:** Resolved the deployment issue by configuring a custom pre-build script (`"vercel-build": "prisma generate && tsc -b"`) in `package.json`, ensuring schema generation occurs prior to TypeScript compilation.
+
+4. **Automating Authentication with Cookie-Parser Migration:**
+   - **Challenge:** Replaced tedious manual `Authorization: Bearer <token>` token copy-pasting during Postman testing and frontend integration by migrating to secure **HTTP-Only Cookies**.
+   - **Solution:** Integrated `cookie-parser` on the backend so that JWTs are automatically injected and stored in client storage upon login, securing the authentication flow and protecting against XSS attacks.
+
+---
+
+### 📚 Key Learnings
+
+- **Multi-Gateway Architecture:**
+  Learned how to architect modular payment handlers that cleanly separate localized payment logic (SSLCommerz) from global standards (Stripe).
+
+- **CI/CD & Deployment Configurations:**
+  Gained hands-on experience troubleshooting build-time environment dependencies, database ORM client generation, and cloud deployment pipelines.
+
+- **Modern Web Security Practices:**
+  Practical knowledge in hardening authentication with HTTP-Only cookies, CORS policies, and strict role-based authorization layers.
 
 ---
 
