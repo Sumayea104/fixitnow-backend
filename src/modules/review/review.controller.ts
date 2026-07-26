@@ -3,12 +3,11 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import ReviewService from './review.service';
-import prisma from '../../config/prisma';
 
 // ==================== Create Review ====================
 const createReview = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const customerId = req.user.id;
-  const result = await ReviewService.createReview(customerId, req.body);
+  const userId = req.user.id;
+  const result = await ReviewService.createReview(userId, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
@@ -18,10 +17,9 @@ const createReview = catchAsync(async (req: Request & { user?: any }, res: Respo
   });
 });
 
-// ==================== Get Technician Reviews ====================
-const getTechnicianReviews = catchAsync(async (req: Request, res: Response) => {
-  const { technicianId } = req.params;
-  const result = await ReviewService.getTechnicianReviews(technicianId, req.query);
+// ==================== Get All Reviews ====================
+const getAllReviews = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReviewService.getAllReviews(req.query);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -32,14 +30,15 @@ const getTechnicianReviews = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// ==================== Get All Reviews (Public) ====================
-const getAllReviews = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReviewService.getAllReviews(req.query);
+// ==================== Get Reviews by Technician ====================
+const getTechnicianReviews = catchAsync(async (req: Request, res: Response) => {
+  const { technicianId } = req.params;
+  const result = await ReviewService.getTechnicianReviews(technicianId, req.query);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Reviews retrieved successfully',
+    message: 'Technician reviews retrieved successfully',
     data: result.reviews,
     meta: result.meta,
   });
@@ -60,9 +59,9 @@ const getReviewDetails = catchAsync(async (req: Request, res: Response) => {
 
 // ==================== Update Review ====================
 const updateReview = catchAsync(async (req: Request & { user?: any }, res: Response) => {
+  const userId = req.user.id;
   const { id } = req.params;
-  const customerId = req.user.id;
-  const result = await ReviewService.updateReview(id, customerId, req.body);
+  const result = await ReviewService.updateReview(id, userId, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -72,45 +71,31 @@ const updateReview = catchAsync(async (req: Request & { user?: any }, res: Respo
   });
 });
 
-// ==================== Reply to Review ====================
-const replyToReview = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const { id } = req.params;
-  const { reply } = req.body;
-
-  // Get technician profile
-  const technician = await prisma?.technicianProfile.findUnique({
-    where: { userId: req.user.id },
-  });
-
-  if (!technician) {
-    return sendResponse(res, {
-      statusCode: StatusCodes.NOT_FOUND,
-      success: false,
-      message: 'Technician profile not found',
-    });
-  }
-
-  const result = await ReviewService.replyToReview(id, technician.id, reply);
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Reply added successfully',
-    data: result,
-  });
-});
-
 // ==================== Delete Review ====================
 const deleteReview = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const { id } = req.params;
   const userId = req.user.id;
-  const userRole = req.user.role;
-  const result = await ReviewService.deleteReview(id, userId, userRole);
+  const { id } = req.params;
+  const result = await ReviewService.deleteReview(id, userId, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Review deleted successfully',
+    data: result,
+  });
+});
+
+// ==================== Reply to Review (Technician) ====================
+const replyToReview = catchAsync(async (req: Request & { user?: any }, res: Response) => {
+  const userId = req.user.id;
+  const { id } = req.params;
+  const { reply } = req.body;
+  const result = await ReviewService.replyToReview(id, userId, reply);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Reply added successfully',
     data: result,
   });
 });
@@ -128,15 +113,16 @@ const markReviewHelpful = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// ==================== Export ====================
 export const ReviewController = {
   createReview,
-  getTechnicianReviews,
-  getAllReviews,
-  getReviewDetails,
-  updateReview,
-  replyToReview,
-  deleteReview,
-  markReviewHelpful,
+  getAllReviews,           // ✅ GET /api/reviews
+  getTechnicianReviews,    // ✅ GET /api/reviews/technician/:technicianId
+  getReviewDetails,        // ✅ GET /api/reviews/:id
+  updateReview,            // ✅ PATCH /api/reviews/:id
+  deleteReview,            // ✅ DELETE /api/reviews/:id
+  replyToReview,           // ✅ POST /api/reviews/:id/reply
+  markReviewHelpful,       // ✅ POST /api/reviews/:id/helpful
 };
 
 export default ReviewController;

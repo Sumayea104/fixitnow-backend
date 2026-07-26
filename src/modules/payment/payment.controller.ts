@@ -4,10 +4,11 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import PaymentService from './payment.service';
 
+// ==================== Create Payment ====================
 const createPayment = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const customerId = req.user.id;
+  const userId = req.user.id;
   const { bookingId, provider } = req.body;
-  const result = await PaymentService.createPayment(customerId, bookingId, provider);
+  const result = await PaymentService.createPayment(userId, bookingId, provider);
 
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
@@ -17,10 +18,10 @@ const createPayment = catchAsync(async (req: Request & { user?: any }, res: Resp
   });
 });
 
+// ==================== Confirm Payment ====================
 const confirmPayment = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { status, paymentIntentId, transactionId } = req.body;
-  const result = await PaymentService.confirmPayment(id, { status, paymentIntentId, transactionId });
+  const result = await PaymentService.confirmPayment(id, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -30,9 +31,10 @@ const confirmPayment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// ==================== Get Payment History ====================
 const getPaymentHistory = catchAsync(async (req: Request & { user?: any }, res: Response) => {
-  const customerId = req.user.id;
-  const result = await PaymentService.getPaymentHistory(customerId, req.query);
+  const userId = req.user.id;
+  const result = await PaymentService.getPaymentHistory(userId, req.query);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -43,10 +45,11 @@ const getPaymentHistory = catchAsync(async (req: Request & { user?: any }, res: 
   });
 });
 
+// ==================== Get Payment Details ====================
 const getPaymentDetails = catchAsync(async (req: Request & { user?: any }, res: Response) => {
+  const userId = req.user.id;
   const { id } = req.params;
-  const customerId = req.user.id;
-  const result = await PaymentService.getPaymentDetails(id, customerId);
+  const result = await PaymentService.getPaymentDetails(id, userId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -56,13 +59,20 @@ const getPaymentDetails = catchAsync(async (req: Request & { user?: any }, res: 
   });
 });
 
+// ==================== Stripe Webhook ====================
 const stripeWebhook = catchAsync(async (req: Request, res: Response) => {
   const sig = req.headers['stripe-signature'] as string;
-  const payload = req.body;
-  await PaymentService.handleStripeWebhook(payload, sig);
-  res.status(StatusCodes.OK).json({ received: true });
+  const result = await PaymentService.handleStripeWebhook(req.body, sig);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Webhook received',
+    data: result,
+  });
 });
 
+// ==================== Export ====================
 export const PaymentController = {
   createPayment,
   confirmPayment,

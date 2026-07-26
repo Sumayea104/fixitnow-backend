@@ -22,17 +22,10 @@ export const changePasswordSchema = z.object({
   }),
 });
 
-// ==================== Upload Avatar Validation ====================
-export const uploadAvatarSchema = z.object({
-  body: z.object({
-    avatar: z.string().url('Invalid image URL'),
-  }),
-});
-
-// ==================== Get User by ID Validation ====================
+// ==================== User ID Validation ====================
 export const userIdSchema = z.object({
   params: z.object({
-    id: z.string({ required_error: 'User ID is required' }), // 🌟 .uuid() রিমুভড (CUID Compatibility)
+    id: z.string().uuid('Invalid user ID'),
   }),
 });
 
@@ -61,7 +54,6 @@ export const updateUserStatusSchema = z.object({
 // ==================== Type Exports ====================
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>['body'];
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>['body'];
-export type UploadAvatarInput = z.infer<typeof uploadAvatarSchema>['body'];
 export type UserIdParam = z.infer<typeof userIdSchema>['params'];
 export type UserQueryInput = z.infer<typeof userQuerySchema>['query'];
 export type UpdateUserStatusInput = z.infer<typeof updateUserStatusSchema>['body'];

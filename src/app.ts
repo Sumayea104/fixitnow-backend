@@ -2,7 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import cookieParser from 'cookie-parser'; // 1️⃣ এটি ইমপোর্ট করুন
+import cookieParser from 'cookie-parser'; 
 import { StatusCodes } from 'http-status-codes';
 
 import authRoutes from './modules/auth/auth.route';
@@ -13,6 +13,7 @@ import categoryRoutes from './modules/category/category.route';
 import bookingRoutes from './modules/booking/booking.route';
 import paymentRoutes from './modules/payment/payment.route';
 import reviewRoutes from './modules/review/review.route';
+import userRoutes from './modules/user/user.route';
 
 import { errorHandler } from './middlewares';
 import AppError from './errors/AppError';
@@ -30,7 +31,7 @@ app.use(cors({
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser()); // 2️⃣ express.json()-এর ঠিক নিচে মিডেলওয়্যারটি যুক্ত করুন
+app.use(cookieParser()); 
 
 // Swagger Documentation
 setupSwagger(app);
@@ -44,7 +45,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/reviews', reviewRoutes);
-
+app.use('/api/users', userRoutes);
 // ==================== ROOT ROUTE ====================
 app.get('/', (_req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({

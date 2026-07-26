@@ -1,6 +1,4 @@
-import { Prisma, PaymentStatus, PaymentProvider } from '@prisma/client'; 
-
-
+import { Prisma, PaymentStatus, PaymentProvider } from '@prisma/client';
 import prisma from '../../config/prisma';
 import config from '../../config/env';
 import AppError from '../../errors/AppError';
@@ -11,24 +9,37 @@ const stripe = new Stripe(config.stripe.secretKey, {
   apiVersion: '2025-02-24.acacia',
 });
 
-export const createPayment = async (customerId: string, bookingId: string, provider: PaymentProvider) => {
+// ==================== Create Payment ====================
+export const createPayment = async (
+  customerId: string,
+  bookingId: string,
+  provider: PaymentProvider
+) => {
+  // Check if booking exists
   const booking = await prisma.booking.findUnique({
     where: { id: bookingId },
-    include: { customer: true, technician: { include: { user: true } }, service: true },
+    include: {
+      customer: true,
+      technician: { include: { user: true } },
+      service: true,
+    },
   });
 
   if (!booking) {
     throw new AppError(StatusCodes.NOT_FOUND, 'Booking not found');
   }
 
+  // Check if user owns this booking
   if (booking.customerId !== customerId) {
     throw new AppError(StatusCodes.FORBIDDEN, 'You do not have access to this booking');
   }
 
+  // Check if booking is accepted
   if (booking.status !== 'ACCEPTED') {
     throw new AppError(StatusCodes.BAD_REQUEST, 'Booking must be accepted before payment');
   }
 
+  // Check if payment already exists
   const existingPayment = await prisma.payment.findUnique({
     where: { bookingId },
   });
@@ -42,11 +53,16 @@ export const createPayment = async (customerId: string, bookingId: string, provi
   let paymentIntentId: string | undefined;
   let clientSecret: string | undefined;
 
+  // Stripe Payment
   if (provider === PaymentProvider.STRIPE) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(booking.totalPrice * 100),
       currency: 'usd',
-      metadata: { bookingId: booking.id, customerId: customerId, transactionId: transactionId },
+      metadata: {
+        bookingId: booking.id,
+        customerId: customerId,
+        transactionId: transactionId,
+      },
       receipt_email: booking.customer.email,
     });
 
@@ -54,6 +70,15 @@ export const createPayment = async (customerId: string, bookingId: string, provi
     clientSecret = paymentIntent.client_secret || undefined;
   }
 
+  // SSLCommerz Payment (handled separately)
+  if (provider === PaymentProvider.SSLCOMMERZ) {
+    // SSLCommerz will be handled in a separate flow
+    // We just create a pending payment record
+    paymentIntentId = undefined;
+    clientSecret = undefined;
+  }
+
+  // Create payment record
   const payment = await prisma.payment.create({
     data: {
       bookingId: booking.id,
@@ -64,21 +89,35 @@ export const createPayment = async (customerId: string, bookingId: string, provi
       provider: provider,
       status: PaymentStatus.PENDING,
       paymentIntentId: paymentIntentId,
-      metadata: { clientSecret },
+      metadata: clientSecret ? { clientSecret } : {},
     },
     include: {
       booking: {
-        include: { customer: true, technician: { include: { user: true } }, service: true },
+        include: {
+          customer: true,
+          technician: { include: { user: true } },
+          service: true,
+        },
       },
     },
   });
 
-  return { payment, clientSecret, paymentIntentId, publishableKey: config.stripe.publishableKey };
+  return {
+    payment,
+    clientSecret,
+    paymentIntentId,
+    publishableKey: config.stripe.publishableKey,
+  };
 };
 
+// ==================== Confirm Payment ====================
 export const confirmPayment = async (
   paymentId: string,
-  data: { paymentIntentId?: string; transactionId?: string; status: 'COMPLETED' | 'FAILED' }
+  data: {
+    paymentIntentId?: string;
+    transactionId?: string;
+    status: 'COMPLETED' | 'FAILED';
+  }
 ) => {
   const payment = await prisma.payment.findUnique({
     where: { id: paymentId },
@@ -98,11 +137,16 @@ export const confirmPayment = async (
     },
     include: {
       booking: {
-        include: { customer: true, technician: { include: { user: true } }, service: true },
+        include: {
+          customer: true,
+          technician: { include: { user: true } },
+          service: true,
+        },
       },
     },
   });
 
+  // If payment is completed, update booking status to PAID
   if (data.status === 'COMPLETED') {
     await prisma.booking.update({
       where: { id: payment.bookingId },
@@ -113,26 +157,60 @@ export const confirmPayment = async (
   return updatedPayment;
 };
 
+// ==================== Get Payment History ====================
 export const getPaymentHistory = async (customerId: string, query: any) => {
   const page = Math.max(1, parseInt(query.page) || 1);
   const limit = Math.min(parseInt(query.limit) || 10, 100);
+  const sortBy = query.sortBy || 'createdAt';
+  const sortOrder = query.sortOrder === 'asc' ? 'asc' : 'desc';
   const status = query.status as PaymentStatus | undefined;
+  const provider = query.provider as PaymentProvider | undefined;
+
   const skip = (page - 1) * limit;
 
-  const where: Prisma.PaymentWhereInput = { customerId };
-  if (status) where.status = status;
+  const where: Prisma.PaymentWhereInput = {
+    customerId,
+  };
+
+  if (status) {
+    where.status = status;
+  }
+
+  if (provider) {
+    where.provider = provider;
+  }
 
   const payments = await prisma.payment.findMany({
     where,
     skip,
     take: limit,
-    orderBy: { createdAt: 'desc' },
+    orderBy: { [sortBy]: sortOrder },
     include: {
       booking: {
         include: {
-          customer: { select: { id: true, name: true, email: true } },
-          technician: { include: { user: { select: { id: true, name: true, email: true } } } },
-          service: { include: { category: true } },
+          customer: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          technician: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                },
+              },
+            },
+          },
+          service: {
+            include: {
+              category: true,
+            },
+          },
         },
       },
     },
@@ -140,9 +218,18 @@ export const getPaymentHistory = async (customerId: string, query: any) => {
 
   const total = await prisma.payment.count({ where });
 
-  return { payments, meta: { page, limit, total, totalPages: Math.ceil(total / limit) } };
+  return {
+    payments,
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
 
+// ==================== Get Payment Details ====================
 export const getPaymentDetails = async (paymentId: string, customerId: string) => {
   const payment = await prisma.payment.findUnique({
     where: { id: paymentId },
@@ -168,6 +255,7 @@ export const getPaymentDetails = async (paymentId: string, customerId: string) =
   return payment;
 };
 
+// ==================== Handle Stripe Webhook ====================
 export const handleStripeWebhook = async (payload: any, sig: string) => {
   const endpointSecret = config.stripe.webhookSecret;
   let event: Stripe.Event;
@@ -197,12 +285,17 @@ export const handleStripeWebhook = async (payload: any, sig: string) => {
     if (payment) {
       await prisma.payment.update({
         where: { id: payment.id },
-        data: { status: PaymentStatus.COMPLETED, paidAt: new Date() },
+        data: {
+          status: PaymentStatus.COMPLETED,
+          paidAt: new Date(),
+        },
       });
+
       await prisma.booking.update({
         where: { id: bookingId },
         data: { status: 'PAID' },
       });
+
       console.log(`✅ Payment completed for booking: ${bookingId}`);
     }
   }
