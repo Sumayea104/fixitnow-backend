@@ -277,7 +277,8 @@ fixitnow-backend/
 
 ## 🌐 Live API
 
-- **Live URL:** [https://fixitnow-backend-m1ur.onrender.com](https://fixitnow-backend-m1ur.onrender.com)
+- **Live URL:** [Render](https://fixitnow-backend-m1ur.onrender.com)
+[Vercel](https://fixitnow-backend-m1ur.onrender.com/)
 
 ---
 
