@@ -12,7 +12,7 @@
     "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
     "prisma:studio": "prisma studio --schema=prisma/schema.prisma",
     "prisma:seed": "ts-node prisma/seed.ts",
-    "vercel-build": "npm run build"
+    "vercel-build": "prisma generate && tsup"
   },
   "keywords": [
     "home-services",
