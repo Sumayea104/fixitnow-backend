@@ -34,3 +34,5 @@ coverage/
 *.tsbuildinfo
 /generated/prisma
 
+.vercel
+.env*
