@@ -304,7 +304,7 @@ curl -X POST https://fixitnow-backend-m1ur.onrender.com/api/auth/login \
 
 ### Test with Postman
 
-Import the Postman collection from `postman/FixItNow.postman_collection.json`
+Import the Postman collection from `[postman/FixItNow.postman_collection.json](https://documenter.getpostman.com/view/55163778/2sBY4SNK1v)`
 
 ---
 

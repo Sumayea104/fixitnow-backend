@@ -1,77 +1,22 @@
 {
   "info": {
+    "_postman_id": "6741563f-5276-4ef6-b8eb-c6236efb7f2c",
     "name": "FixItNow API",
     "description": "FixItNow - Your Trusted Home Service Platform. A modular and robust Node.js backend API built with TypeScript and Express for a home services marketplace.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "version": "1.0.0"
+    "_exporter_id": "55163778",
+    "_collection_link": "https://go.postman.co/collection/55163778-6741563f-5276-4ef6-b8eb-c6236efb7f2c?source=collection_link"
   },
-  "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:5000",
-      "type": "string"
-    },
-    {
-      "key": "token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "admin_token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "tech_token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "booking_id",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "service_id",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "category_id",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "user_id",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "technician_id",
-      "value": "",
-      "type": "string"
-    }
-  ],
   "item": [
-    {
-      "name": "🏥 Health Check",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/health",
-          "host": ["{{base_url}}"],
-          "path": ["health"]
-        }
-      },
-      "response": []
-    },
     {
       "name": "🔐 Authentication",
       "item": [
         {
           "name": "1. Register User",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -81,19 +26,44 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"customer@test.com\",\n  \"password\": \"password123\",\n  \"name\": \"Test Customer\",\n  \"phone\": \"+8801712345678\",\n  \"role\": \"CUSTOMER\"\n}"
+              "raw": "{\n  \"email\": \"customer234@test.com\",\n  \"password\": \"password123\",\n  \"name\": \"Test Customer\",\n  \"phone\": \"+8801712345678\",\n  \"role\": \"CUSTOMER\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/auth/register",
-              "host": ["{{base_url}}"],
-              "path": ["api", "auth", "register"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
             }
           },
           "response": []
         },
         {
           "name": "2. Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.globals.set(\"token\", response.data.token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -103,12 +73,18 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"customer@test.com\",\n  \"password\": \"password123\"\n}"
+              "raw": "{\n  \"email\": \"customer234@test.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
             }
           },
           "response": []
@@ -116,6 +92,9 @@
         {
           "name": "3. Get Current User",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -125,15 +104,40 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/auth/me",
-              "host": ["{{base_url}}"],
-              "path": ["api", "auth", "me"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
             }
           },
           "response": []
         },
         {
           "name": "4. Login as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.globals.set(\"admin_token\", response.data.token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -147,15 +151,40 @@
             },
             "url": {
               "raw": "{{base_url}}/api/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
             }
           },
           "response": []
         },
         {
           "name": "5. Login as Technician",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.globals.set(\"tech_token\", response.data.token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -169,11 +198,51 @@
             },
             "url": {
               "raw": "{{base_url}}/api/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
             }
           },
           "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZ...",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
         }
       ]
     },
@@ -183,12 +252,20 @@
         {
           "name": "1. Get All Services",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/services?category=plumbing&minPrice=50&maxPrice=500&page=1&limit=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "services"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "services"
+              ],
               "query": [
                 {
                   "key": "category",
@@ -223,12 +300,20 @@
         {
           "name": "2. Get All Technicians",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/technicians?service=plumbing&location=Dhaka&minRating=4&isAvailable=true",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians"
+              ],
               "query": [
                 {
                   "key": "service",
@@ -258,12 +343,27 @@
         {
           "name": "3. Get Technician Profile",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/technicians/:id",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians", ":id"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
@@ -271,12 +371,20 @@
         {
           "name": "4. Get All Categories",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/categories",
-              "host": ["{{base_url}}"],
-              "path": ["api", "categories"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "categories"
+              ]
             }
           },
           "response": []
@@ -289,6 +397,9 @@
         {
           "name": "1. Create Booking",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -302,12 +413,17 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"serviceId\": \"service_id_here\",\n  \"scheduledDate\": \"2026-07-20\",\n  \"scheduledTime\": \"14:30\",\n  \"durationMinutes\": 60,\n  \"notes\": \"Please bring your own tools\"\n}"
+              "raw": "{\n  \"serviceId\": \"cmri8lbd000012243qh35lwhe\", \n  \"scheduledDate\": \"2026-09-27T00:00:00.000Z\",\n  \"scheduledTime\": \"09:00\",\n  \"duration Minutes\": 60,\n  \"notes\": \"Please bring tools\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/bookings",
-              "host": ["{{base_url}}"],
-              "path": ["api", "bookings"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings"
+              ]
             }
           },
           "response": []
@@ -315,6 +431,9 @@
         {
           "name": "2. Get My Bookings",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -324,8 +443,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/bookings?status=REQUESTED&page=1&limit=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "bookings"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings"
+              ],
               "query": [
                 {
                   "key": "status",
@@ -350,6 +474,9 @@
         {
           "name": "3. Get Booking Details",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -359,8 +486,20 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/bookings/:id",
-              "host": ["{{base_url}}"],
-              "path": ["api", "bookings", ":id"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
@@ -373,11 +512,15 @@
         {
           "name": "1. Update Technician Profile",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{tech_token}}"
+                "value": "Bearer {{tech_token}}",
+                "disabled": true
               },
               {
                 "key": "Content-Type",
@@ -386,12 +529,18 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"bio\": \"Experienced plumber with 10+ years\",\n  \"experience\": 10,\n  \"hourlyRate\": 75,\n  \"location\": \"Dhaka, Bangladesh\",\n  \"skills\": [\"Plumbing\", \"Pipe Repair\", \"Water Heater\"]\n}"
+              "raw": "{\n  \"bio\": \"Experienced plumber with 10+ years\",\n  \"experience\": 10,\n  \"hourlyRate\": 75,\n  \"location\": \"Dhaka, Bangladesh\",\n  \"skills\": [\"Plumbing\", \"Pipe Repair\"]\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/technicians/profile",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians", "profile"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians",
+                "profile"
+              ]
             }
           },
           "response": []
@@ -399,6 +548,9 @@
         {
           "name": "2. Update Availability Slots",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [
               {
@@ -416,8 +568,14 @@
             },
             "url": {
               "raw": "{{base_url}}/api/technicians/availability",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians", "availability"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians",
+                "availability"
+              ]
             }
           },
           "response": []
@@ -425,6 +583,9 @@
         {
           "name": "3. Get My Bookings",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -434,8 +595,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/technicians/bookings",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians", "bookings"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians",
+                "bookings"
+              ]
             }
           },
           "response": []
@@ -443,6 +610,9 @@
         {
           "name": "4. Update Booking Status",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
@@ -460,8 +630,21 @@
             },
             "url": {
               "raw": "{{base_url}}/api/technicians/bookings/:id",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians", "bookings", ":id"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians",
+                "bookings",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
@@ -469,6 +652,9 @@
         {
           "name": "5. Get My Stats",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -478,8 +664,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/technicians/stats",
-              "host": ["{{base_url}}"],
-              "path": ["api", "technicians", "stats"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technicians",
+                "stats"
+              ]
             }
           },
           "response": []
@@ -492,6 +684,9 @@
         {
           "name": "1. Create Payment (SSLCommerz)",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -509,8 +704,14 @@
             },
             "url": {
               "raw": "{{base_url}}/api/payments/create",
-              "host": ["{{base_url}}"],
-              "path": ["api", "payments", "create"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
             }
           },
           "response": []
@@ -518,6 +719,9 @@
         {
           "name": "2. Create Payment (Stripe)",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -535,8 +739,14 @@
             },
             "url": {
               "raw": "{{base_url}}/api/payments/create",
-              "host": ["{{base_url}}"],
-              "path": ["api", "payments", "create"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
             }
           },
           "response": []
@@ -544,6 +754,9 @@
         {
           "name": "3. Get Payment History",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -553,8 +766,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/payments",
-              "host": ["{{base_url}}"],
-              "path": ["api", "payments"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
             }
           },
           "response": []
@@ -584,8 +802,13 @@
             },
             "url": {
               "raw": "{{base_url}}/api/reviews",
-              "host": ["{{base_url}}"],
-              "path": ["api", "reviews"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reviews"
+              ]
             }
           },
           "response": []
@@ -598,6 +821,9 @@
         {
           "name": "1. Get Dashboard Stats",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -607,8 +833,15 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/admin/dashboard/stats",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "dashboard", "stats"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "dashboard",
+                "stats"
+              ]
             }
           },
           "response": []
@@ -616,6 +849,9 @@
         {
           "name": "2. Get All Users",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -624,9 +860,15 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/admin/users?status=ACTIVE&role=CUSTOMER&page=1&limit=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "users"],
+              "raw": "{{base_url}}/api/admin/users?status=ACTIVE&role=CUSTOMER&search=&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ],
               "query": [
                 {
                   "key": "status",
@@ -661,6 +903,9 @@
         {
           "name": "3. Update User Status",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
@@ -678,8 +923,22 @@
             },
             "url": {
               "raw": "{{base_url}}/api/admin/users/:id/status",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "users", ":id", "status"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users",
+                ":id",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
@@ -687,6 +946,9 @@
         {
           "name": "4. Get All Bookings",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -696,8 +958,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/admin/bookings?status=REQUESTED&page=1&limit=10",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "bookings"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "bookings"
+              ],
               "query": [
                 {
                   "key": "status",
@@ -722,6 +990,9 @@
         {
           "name": "5. Create Category",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -739,8 +1010,14 @@
             },
             "url": {
               "raw": "{{base_url}}/api/admin/categories",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "categories"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
             }
           },
           "response": []
@@ -748,6 +1025,9 @@
         {
           "name": "6. Get All Categories (Admin)",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [
               {
@@ -757,8 +1037,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/admin/categories",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "categories"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
             }
           },
           "response": []
@@ -766,6 +1052,9 @@
         {
           "name": "7. Update Category",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
@@ -783,8 +1072,21 @@
             },
             "url": {
               "raw": "{{base_url}}/api/admin/categories/:id",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "categories", ":id"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "categories",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
@@ -792,6 +1094,9 @@
         {
           "name": "8. Delete Category",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "DELETE",
             "header": [
               {
@@ -801,8 +1106,21 @@
             ],
             "url": {
               "raw": "{{base_url}}/api/admin/categories/:id",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "categories", ":id"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "categories",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
@@ -810,6 +1128,9 @@
         {
           "name": "9. Verify Technician",
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PATCH",
             "header": [
               {
@@ -827,13 +1148,119 @@
             },
             "url": {
               "raw": "{{base_url}}/api/admin/technicians/:id/verify",
-              "host": ["{{base_url}}"],
-              "path": ["api", "admin", "technicians", ":id", "verify"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "technicians",
+                ":id",
+                "verify"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
         }
       ]
+    },
+    {
+      "name": "🏥 Health Check",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmk1NXZibTAwMDB6bHY2cTR3NnJhd2EiLCJlbWFpbCI6ImN1c3RvbWVyQHRlc3QuY29tIiwicm9sZSI6IkNVU1RPTUVSIiwiaWF0IjoxNzg0MjI5ODY4LCJleHAiOjE3ODQ4MzQ2Njh9.FEThdwD4Ofb4uvaBFw1nK7LGlRah09JT5K1kq_zrG00",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "tech_token",
+      "value": ""
+    },
+    {
+      "key": "booking_id",
+      "value": ""
+    },
+    {
+      "key": "service_id",
+      "value": ""
+    },
+    {
+      "key": "category_id",
+      "value": ""
+    },
+    {
+      "key": "user_id",
+      "value": ""
+    },
+    {
+      "key": "technician_id",
+      "value": ""
     }
   ]
 }
