@@ -104,31 +104,31 @@ async function main() {
   });
   console.log('✅ Customer created');
 
-  // 5. Create Services for all Categories
+  // 5. Create Services for all Categories (FIXED: images array added)
   const servicesData = [
     // Plumbing Services
     {
       title: 'Emergency Pipe & Leak Repair',
       description: 'Fast and reliable pipe leak detection, repair, and replacement for kitchen and bathroom.',
       price: 150,
-      duration: 60,
-      image: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 60,
+      images: ['https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=600&auto=format&fit=crop&q=80'],
       categoryId: plumbing.id,
     },
     {
       title: 'Water Heater Installation & Fixing',
       description: 'Complete water heater inspection, maintenance, heating element fix, and new installation.',
       price: 300,
-      duration: 120,
-      image: 'https://images.unsplash.com/photo-1505798577917-a65157d3320a?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 120,
+      images: ['https://images.unsplash.com/photo-1505798577917-a65157d3320a?w=600&auto=format&fit=crop&q=80'],
       categoryId: plumbing.id,
     },
     {
       title: 'Drain & Sewer Line Unclogging',
       description: 'Advanced blockage removal for clogged sinks, toilets, and main sewer pipes.',
       price: 120,
-      duration: 45,
-      image: 'https://images.unsplash.com/photo-1542013936693-884638332954?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 45,
+      images: ['https://images.unsplash.com/photo-1542013936693-884638332954?w=600&auto=format&fit=crop&q=80'],
       categoryId: plumbing.id,
     },
 
@@ -137,16 +137,16 @@ async function main() {
       title: 'Complete House Wiring & Fixes',
       description: 'Safe short circuit fixing, breaker box upgrade, and full residential electrical wiring.',
       price: 250,
-      duration: 90,
-      image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 90,
+      images: ['https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80'],
       categoryId: electrical.id,
     },
     {
       title: 'Fan, Light & Appliance Setup',
       description: 'Installation of ceiling fans, chandelier lighting, smart switches, and kitchen appliances.',
       price: 80,
-      duration: 30,
-      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 30,
+      images: ['https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=80'],
       categoryId: electrical.id,
     },
 
@@ -155,16 +155,16 @@ async function main() {
       title: 'Full Home Deep Cleaning',
       description: 'Comprehensive cleaning for bedrooms, kitchen, bathrooms, living area, and balcony.',
       price: 450,
-      duration: 240,
-      image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 240,
+      images: ['https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&auto=format&fit=crop&q=80'],
       categoryId: cleaning.id,
     },
     {
       title: 'Sofa & Carpet Shampoo Wash',
       description: 'Deep stain removal, sanitization, and shampoo washing for upholstered furniture.',
       price: 180,
-      duration: 90,
-      image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 90,
+      images: ['https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&auto=format&fit=crop&q=80'],
       categoryId: cleaning.id,
     },
 
@@ -173,16 +173,16 @@ async function main() {
       title: 'Interior Apartment Painting',
       description: 'Premium interior wall painting with surface preparation, putty, and smooth finish.',
       price: 600,
-      duration: 360,
-      image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 360,
+      images: ['https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&auto=format&fit=crop&q=80'],
       categoryId: painting.id,
     },
     {
       title: 'Waterproof Wall & Damp Treatment',
       description: 'Protective damp-proof coating and wall repair to prevent water leakage and fungus.',
       price: 350,
-      duration: 180,
-      image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&auto=format&fit=crop&q=80',
+      durationMinutes: 180,
+      images: ['https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&auto=format&fit=crop&q=80'],
       categoryId: painting.id,
     },
   ];
