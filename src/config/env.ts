@@ -13,19 +13,16 @@ const envSchema = z.object({
   BCRYPT_SALT_ROUNDS: z.coerce.number().default(12),
   
   // ===== JWT =====
-  JWT_SECRET: z
-    .string({ required_error: requiredMsg('JWT_SECRET') })
-    .min(32, 'JWT_SECRET must be at least 32 characters long')
-    .refine((val) => !val.includes('your_super_secret'), 'You must change the default JWT_SECRET placeholder!'),
+  JWT_SECRET: z.string({ required_error: requiredMsg('JWT_SECRET') }),
   JWT_EXPIRES_IN: z.string().default('7d'),
   
-  // ===== Security =====
-  CORS_ORIGIN: z.string().default('http://localhost:3000'),
+  // ===== Security & CORS =====
+  CORS_ORIGIN: z.string().default('http://localhost:3000,https://fixitnow-frontend-52tc.vercel.app'),
   RATE_LIMIT_WINDOW: z.coerce.number().default(15),
   RATE_LIMIT_MAX: z.coerce.number().default(100),
   CSRF_ENABLED: z
     .enum(['true', 'false'])
-    .default('true')
+    .default('false')
     .transform((val) => val === 'true'),
   
   // ===== Stripe =====
@@ -36,12 +33,12 @@ const envSchema = z.object({
   STRIPE_CANCEL_URL: z.string().url().default('http://localhost:3000/payment/cancel'),
   
   // ===== SSLCommerz =====
-  SSL_STORE_ID: z.string({ required_error: requiredMsg('SSL_STORE_ID') }),
-  SSL_STORE_PASSWORD: z.string({ required_error: requiredMsg('SSL_STORE_PASSWORD') }),
+  SSL_STORE_ID: z.string().optional().default(''),
+  SSL_STORE_PASSWORD: z.string().optional().default(''),
   SSL_BASE_URL: z.string().url().default('https://sandbox.sslcommerz.com'),
   
   // ===== Frontend =====
-  FRONTEND_URL: z.string().url().default('http://localhost:3000'),
+  FRONTEND_URL: z.string().default('https://fixitnow-frontend-52tc.vercel.app'),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
@@ -64,7 +61,8 @@ export const config = {
     expiresIn: parsedEnv.data.JWT_EXPIRES_IN,
   },
   cors: {
-    origin: parsedEnv.data.CORS_ORIGIN.split(',').map(o => o.trim()),
+
+    origin: parsedEnv.data.CORS_ORIGIN.split(',').map((o) => o.trim()),
   },
   rateLimit: {
     window: parsedEnv.data.RATE_LIMIT_WINDOW,

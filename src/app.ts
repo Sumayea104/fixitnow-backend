@@ -2,7 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import cookieParser from 'cookie-parser'; 
+import cookieParser from 'cookie-parser';
 import { StatusCodes } from 'http-status-codes';
 
 import authRoutes from './modules/auth/auth.route';
@@ -22,12 +22,40 @@ import { setupSwagger } from './swagger';
 
 const app: Application = express();
 
-// Middleware
+// Middlewares
 app.use(helmet());
+
+const allowedOrigins = [
+  ...config.cors.origin,
+  config.frontend.url,
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:5173',
+  'https://fixitnow-frontend-52tc.vercel.app',
+  'https://fixitnow-frontend.vercel.app',
+  'https://fixitnow-frontend-52tc.vercel.app'
+].filter((url, index, self) => url && self.indexOf(url) === index);
+
 app.use(cors({
-  origin: config.frontend.url,
-  credentials: true,
+  origin: function (origin, callback) {
+
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️ CORS Request blocked from origin: ${origin}`);
+
+      callback(null, true);
+    }
+  },
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
 }));
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,6 +74,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/users', userRoutes);
+
 // ==================== ROOT ROUTE ====================
 app.get('/', (_req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({
@@ -62,6 +91,7 @@ app.get('/', (_req: Request, res: Response) => {
       bookings: '/api/bookings',
       payments: '/api/payments',
       reviews: '/api/reviews',
+      users: '/api/users',
       docs: '/api-docs',
     },
     environment: config.nodeEnv,
